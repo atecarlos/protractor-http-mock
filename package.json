@@ -1,5 +1,5 @@
 {
-  "name": "protractor-mock",
+  "name": "protractor-http-mock",
   "version": "0.0.1",
   "description": "Mock HTTP calls in your protractor specs.",
   "main": "index.js",
@@ -15,6 +15,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://gitlab.trad.tradestation.com/catencio/protractor-mock" 
+    "url": "https://github.com/atecarlos/protractor-http-mock" 
   }
 }
