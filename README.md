@@ -3,6 +3,8 @@ A NodeJS module to be used alongside [Protractor](https://github.com/angular/pro
 
 This allows the developer to isolate the UI and client-side application code in our tests without any dependencies on an API.
 
+This plugin does not depend on Angular Mocks (ngMockE2E) being loaded into your app; therefore, there is no need to modify anything within your current Angular web application.
+
 ## Installation
 	npm install git+ssh://git@gitlab.trad.tradestation.com:2222/catencio/protractor-mock.git --save-dev
 ## Setup
