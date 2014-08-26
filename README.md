@@ -6,7 +6,7 @@ This allows the developer to isolate the UI and client-side application code in 
 This plugin does not depend on Angular Mocks (ngMockE2E) being loaded into your app; therefore, there is no need to modify anything within your current Angular web application.
 
 ## Installation
-	npm install git+ssh://git@gitlab.trad.tradestation.com:2222/catencio/protractor-mock.git --save-dev
+	npm install protractor-http-mock --save-dev
 ## Setup
 Within the protractor.conf.js file, add the following:
 
