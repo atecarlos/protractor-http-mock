@@ -15,7 +15,7 @@ Within the protractor.conf.js file, add the following:
     	dir: 'mocks' // Specify the location of your mocks relative to the location of the protractor.conf.file
   	},
   	onPrepare: function(){
-    	require('protractor-mock').config = {
+    	require('protractor-http-mock').config = {
       		dir: __dirname // Let the plugin know where to find this protractor.conf.js file and your mocks.
     	};
   	}
