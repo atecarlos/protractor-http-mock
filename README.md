@@ -38,7 +38,7 @@ Mocks are defined as JSON objects describing the request and response for a part
 
 And then set the mock at the beginning of your test before your application loads:
 
-	var mock = require('protractor-mock');
+	var mock = require('protractor-http-mock');
 	...
 
 	  mock([{
