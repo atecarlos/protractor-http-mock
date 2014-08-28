@@ -7,16 +7,24 @@ This plugin does not depend on Angular Mocks (ngMockE2E) being loaded into your 
 
 ## Installation
 	npm install protractor-http-mock --save-dev
-## Setup
-Within the protractor.conf.js file, add the following:
+## Configuration
+In your protractor configuration file, we can set the following options:
+
+### Mocks
+We can set a collection of default mocks to load for every test, and the name of the folder where your mocks will reside. More on this later.
 
   	mocks: {
-    	default: ['mock-login'], // Specify any default mocks that you would like to load for every test
-    	dir: 'mocks' // Specify the location of your mocks relative to the location of the protractor.conf.file
+    	default: ['mock-login'], // default value: []
+    	dir: 'my-mocks' // default value: 'mocks'
   	},
+
+### Directories and file names
+We can also configure our root directory where the mocks and protractor configuration will be located; as well as, the name of the protractor configuration file.
+
   	onPrepare: function(){
     	require('protractor-http-mock').config = {
-      		dir: __dirname // Let the plugin know where to find this protractor.conf.js file and your mocks.
+			rootDirectory: __dirname, // default value: process.cwd()
+			protractorConfig: 'my-protractor-config.conf' // default value: 'protractor.config'
     	};
   	}
 
@@ -54,14 +62,14 @@ And then set the mock at the beginning of your test before your application load
 	    }
 	  }]);
 
-Make sure to clean up after test execution. This should be typically done in the "afterEach" call to ensure the teardown is executed regardless of what happens in the test execution:
+Make sure to clean up after test execution. This should be typically done in the `afterEach` call to ensure the teardown is executed regardless of what happens in the test execution:
 
 	afterEach(function(){
 	  mock.teardown();
 	});
 
-
-Mocks can also be loaded from other files located in the "mocks.dir" defined in the web.config. 
+### Mock files
+Mocks can also be loaded from physical files located in the `mocks.dir` directory that we defined in our configuration: 
 
   	tests
 	    e2e
@@ -71,19 +79,13 @@ Mocks can also be loaded from other files located in the "mocks.dir" defined in 
 	      specs
 	        ...
 
-Given this directory structure and this configuration in your protractor.conf.js
-  
-	  mocks: {
-	    default: [], // Specify any default mocks that you would like to load for every test
-	    dir: 'mocks' // Specify the location of your mocks relative to the location of the protractor.conf.file
-	  }
 
-You could simply load your mocks as follows
+You could simply load your mocks as follows:
 
 	mock(['users']);
 
 
-## Mocks
+### Schema
 The full schema for defining your mocks is as follows:
 
 	  request: {
