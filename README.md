@@ -108,3 +108,7 @@ Protractor mock will respond with the **last** matched request in case there are
 
 #### Response
 The default `status` value is 200 if none is specified.
+
+### Contributions
+
+* Thanks to `nadersoliman` for his input and pull request on allowing the user to set custom name for the protractor configuration file.
