@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Protractor Http Mock - Example</title>
+	</head>
+	<body ng-app="example">
+		<div ng-controller="UserController as ctrl">
+			<ul ng-repeat="user in ctrl.users ">
+				<li>
+					<span>{{ user.firstName }}</span>
+					<span>|</span>
+					<span>{{ user.lastName }}</span>
+				</li>
+			</ul>
+
+			<p id="errorMsg" ng-show="ctrl.showError" ng-bind="ctrl.error">dont show me</p>
+		</div>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
+		<script src="app/app.js"></script>
+	</body>
+</html>

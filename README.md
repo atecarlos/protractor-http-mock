@@ -24,7 +24,7 @@ We can also configure our root directory where the mocks and protractor configur
   	onPrepare: function(){
     	require('protractor-http-mock').config = {
 			rootDirectory: __dirname, // default value: process.cwd()
-			protractorConfig: 'my-protractor-config.conf' // default value: 'protractor.config'
+			protractorConfig: 'my-protractor-config.conf' // default value: 'protractor.conf'
     	};
   	}
 
