@@ -19,4 +19,21 @@ describe('from file', function(){
 			expect(users[1].getText()).toBe('second | from file');	
 		});
 	});
+
+	it('loads multiple from a file', function(){
+		mock(['multiple']);
+
+		get();
+
+		element.all(by.repeater('user in ctrl.users')).then(function(users){
+			expect(users.length).toBe(1);
+			expect(users[0].getText()).toBe('multiple | from file');
+		});
+
+		element.all(by.repeater('group in ctrl.groups')).then(function(groups){
+			expect(groups.length).toBe(2);
+			expect(groups[0].getText()).toBe('file first');
+			expect(groups[1].getText()).toBe('file second');
+		});
+	});
 });

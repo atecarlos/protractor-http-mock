@@ -21,6 +21,6 @@
     "url": "https://github.com/atecarlos/protractor-http-mock"
   },
   "scripts": {
-    "test": "grunt example"
+    "example": "grunt example"
   }
 }

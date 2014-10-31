@@ -84,6 +84,14 @@ You could simply load your mocks as follows:
 
 	mock(['users']);
 
+Files are structured as standard node modules. The strings passed are the path of the file relative to the mocks directory - the same as if you would be doing a standard `require()` call.
+
+	module.exports = { ... }; // for a single mock.
+
+or
+
+	module.exports = [ ... ]; // for multiple mocks.
+
 
 ### Schema
 The full schema for defining your mocks is as follows:
