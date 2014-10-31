@@ -1,9 +1,8 @@
-var mock = require('../../index'); //substitute for require('protractor-http-mock')
+var mock = require('../../index'), //substitute for require('protractor-http-mock')
+	get = require('./get'); 
 
 describe('inline', function(){
 	
-	var URL = 'http://localhost:8000';
-
 	afterEach(function(){
 		mock.teardown();
 	});
@@ -29,7 +28,7 @@ describe('inline', function(){
 				}
 			}]);
 
-			browser.get(URL);
+			get();
 			expect(browser.getTitle()).toBe('Protractor Http Mock - Example');
 			
 			element.all(by.repeater('user in ctrl.users')).then(function(users){
@@ -71,7 +70,7 @@ describe('inline', function(){
 				}
 			]);
 
-			browser.get(URL);
+			get();
 
 			element.all(by.repeater('user in ctrl.users')).then(function(users){
 				expect(users.length).toBe(1);
@@ -103,7 +102,7 @@ describe('inline', function(){
 				}
 			}]);
 
-			browser.get(URL);
+			get();
 			var users = element.all(by.repeater('user in ctrl.users'));
 			expect(users.count()).toBe(0);
 			var errElement = element(by.binding('ctrl.error'));
@@ -137,7 +136,7 @@ describe('inline', function(){
 				}
 			]);
 
-			browser.get(URL);
+			get();
 
 			var users = element.all(by.repeater('user in ctrl.users'));
 			expect(users.count()).toBe(0);
