@@ -4,6 +4,10 @@
 		<title>Protractor Http Mock - Example</title>
 	</head>
 	<body ng-app="example">
+		<div ng-controller="DefaultController as ctrl">
+			<span id="default-name">{{ ctrl.name }}</span>
+		</div>
+
 		<div ng-controller="UserController as ctrl">
 			<ul ng-repeat="user in ctrl.users ">
 				<li>
