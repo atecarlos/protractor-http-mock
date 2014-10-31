@@ -3,7 +3,7 @@ A NodeJS module to be used alongside [Protractor](https://github.com/angular/pro
 
 This allows the developer to isolate the UI and client-side application code in our tests without any dependencies on an API.
 
-This plugin does not depend on Angular Mocks (ngMockE2E) being loaded into your app; therefore, there is no need to modify anything within your current Angular web application.
+**This plugin does not depend on Angular Mocks (ngMockE2E) being loaded into your app; therefore, there is no need to modify anything within your current Angular web application.**
 
 ## Installation
 	npm install protractor-http-mock --save-dev
@@ -116,6 +116,16 @@ Protractor mock will respond with the **last** matched request in case there are
 
 #### Response
 The default `status` value is 200 if none is specified.
+
+### Examples
+Included in the code base are examples on how to use this plugin. Please take a look at the "examples" folder.
+
+To run these tests locally, please follow these steps from the root directory:
+
+1. `npm install`
+2. `node_modules/.bin/webdriver-manager update`
+3. `npm run example`
+
 
 ### Contributions
 
