@@ -13,8 +13,15 @@
 				</li>
 			</ul>
 
-			<p id="errorMsg" ng-show="ctrl.showError" ng-bind="ctrl.error">dont show me</p>
+			<p id="errorMsg" ng-show="ctrl.showError" ng-show="ctrl.showError">{{ ctrl.error }}</p>
 		</div>
+
+		<div ng-controller="GroupController as ctrl">
+			<ul ng-repeat="group in ctrl.groups">
+				<li>{{ group.name }}</li>
+			</ul>
+		</div>
+
 		<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
 		<script src="app/app.js"></script>
 	</body>
