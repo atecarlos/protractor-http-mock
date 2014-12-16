@@ -10,28 +10,22 @@ describe('requests made', function(){
 	it('can evaluate requests made', function(){
 		mock([{
 			request: {
-				path: '/users',
-				method: 'GET'
+				path: 'users/new',
+				method: 'POST'
 			},
 			response: {
-				data: [
-					{
-						firstName: 'carlos',
-						lastName: 'npm'
-					},
-					{
-						firstName: 'angular',
-						lastName: 'js'
-					}
-				]
+				status: 200
 			}
 		}]);
 
 		get();
 
+		element(by.model('ctrl.newUser')).sendKeys('my-new-user');
+		element(by.css('.form button')).click();
+
 		expect(mock.requestsMade()).toEqual([
 			{ url : '/default', method : 'GET' },
-			{ url : '/users', method : 'GET' }
+			{ data : { name : 'my-new-user' }, url : '/users/new', method : 'POST' }
 		]);
 	})
 });
