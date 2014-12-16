@@ -11,6 +11,9 @@ angular
 		return {
 			get: function(){
 				return $http({ method: 'GET', url: '/users' });
+			},
+			post: function(data){
+				return $http({ method: 'POST', url: '/users/new', data: data });
 			}
 		};
 	})
@@ -35,6 +38,7 @@ angular
 
 		self.users = [];
 		self.error = null;
+		self.success = null;
 		self.showError = false;
 
 		userService.get()
@@ -45,6 +49,18 @@ angular
 				self.showError = true;
 				self.error = response.data.error;
 			});
+
+		self.save = function(){
+			userService.post({ name: self.newUser })
+				.then(function(){
+					self.success = 'new user saved: ' + self.newUser;
+					self.newUser = '';
+				})
+				.catch(function(response){
+					self.showError = true;
+					self.error = response.data.error;
+				});
+		};
 	})
 	.controller('GroupController', function(groupService){
 		var self = this;

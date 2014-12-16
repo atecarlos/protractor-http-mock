@@ -17,7 +17,13 @@
 				</li>
 			</ul>
 
-			<p id="errorMsg" ng-show="ctrl.showError" ng-show="ctrl.showError">{{ ctrl.error }}</p>
+			<p id="errorMsg" ng-show="ctrl.showError">{{ ctrl.error }}</p>
+			<p id="successMsg" ng-show="ctrl.success">{{ ctrl.success }}</p>
+
+			<div class="form">
+				<input ng-model="ctrl.newUser" />
+				<button ng-click="ctrl.save()">Save</button>
+			</div>
 		</div>
 
 		<div ng-controller="GroupController as ctrl">

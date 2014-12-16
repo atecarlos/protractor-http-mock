@@ -67,6 +67,15 @@ describe('inline', function(){
 							{ name: 'second' }
 						]
 					}
+				},
+				{
+					request: {
+						path: 'users/new',
+						method: 'POST',
+					},
+					response: {
+						status: 200
+					}
 				}
 			]);
 
@@ -84,6 +93,13 @@ describe('inline', function(){
 			});
 
 			expect(element(by.binding('ctrl.error')).isDisplayed()).toBe(false);
+
+			element(by.model('ctrl.newUser')).sendKeys('my-new-user');
+			element(by.css('.form button')).click();
+
+			var succElement = element(by.binding('ctrl.success'));
+			expect(succElement.isDisplayed()).toBe(true);
+			expect(succElement.getText()).toBe('new user saved: my-new-user');
 		});
 	});
 
@@ -133,6 +149,18 @@ describe('inline', function(){
 						status: 200,
 						data: [ { name: 'i did work' }]
 					}
+				},
+				{
+					request: {
+						path: '/users/new',
+						method: 'POST'
+					},
+					response: {
+						status: 500,
+						data: {
+							error: 'post error!'
+						}
+					}
 				}
 			]);
 
@@ -147,6 +175,9 @@ describe('inline', function(){
 			var errElement = element(by.binding('ctrl.error'));
 			expect(errElement.isDisplayed()).toBe(true);
 			expect(errElement.getText()).toBe('help!');
+
+			element(by.css('.form button')).click();
+			expect(errElement.getText()).toBe('post error!');
 		});
 	});
 });

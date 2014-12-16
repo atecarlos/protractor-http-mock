@@ -24,7 +24,8 @@ module.exports = function(grunt) {
         },
         protractor: {
             options: {
-                configFile: 'example/protractor.conf'
+                configFile: 'example/protractor.conf',
+                //debug: true
             },
             example: {}
         }
