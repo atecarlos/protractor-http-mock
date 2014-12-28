@@ -30,7 +30,7 @@ angular
 				return $http.get('/convs')
 			},
 			post: function(data){
-				return $http.post('/convs/new')
+				return $http.post('/convs/new', data)
 			},
 			delete: function(id){
 				return $http.delete('/convs/' + id)
@@ -91,35 +91,32 @@ angular
 		self.convs = [];
 		self.showError = false;
 
-		function handler(data, status, headers, config){
+		function handler(data, status){
 			self.data = data;
 			self.status = status;
-			self.headers = headers;
-			self.config = config;
+		}
+
+		function errorHandler(data, status){
+			self.showError = true;
+			handler(data, status);
 		}
 
 		convenienceService.get()
 			.success(handler)
-			.error(function(data, status, headers, config){
-				self.showError = true;
-				handler.call(self, arguments);
-			});
+			.error(errorHandler);
 
 		self.save = function(){
 			convenienceService.post({ type: self.newConv })
 				.success(handler)
-				.error(function(data, status, headers, config){
-					self.showError = true;
-					handler.call(self, arguments);
-				});
+				.error(errorHandler);
 		};
 
 		self.delete = function(){
 			convenienceService.delete(self.idToRemove)
 				.success(handler)
-				.error(function(data, status, headers, config){
-					self.showError = true;
-					handler.call(self, arguments);
-				});
+				.error(errorHandler);
+		};
+
+		self.update = function(){
 		};
 	});
