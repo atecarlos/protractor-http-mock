@@ -32,6 +32,19 @@
 			</ul>
 		</div>
 
+		<div ng-controller="ConvenienceController as ctrl">
+			<input ng-model="ctrl.newConv" />
+			<input ng-model="ctrl.idToRemove" />
+			<button id="conv-save" ng-click="save">Save</button>
+			<button id="conv-delete" ng-click="delete">Delete</button>
+
+			<span id="conv-data">{{ ctrl.data }}</span>
+			<span id="conv-status">{{ ctrl.status }}</span>
+			<span id="conv-headers">{{ ctrl.headers }}</span>
+			<span id="conv-config">{{ ctrl.config }}</span>
+			<span id="conv-error" ng-show="ctrl.showError">My convenience error</span>
+		</div>
+
 		<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
 		<script src="app/app.js"></script>
 	</body>
