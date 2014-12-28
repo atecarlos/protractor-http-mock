@@ -117,8 +117,19 @@ Protractor mock will respond with the **last** matched request in case there are
 #### Response
 The default `status` value is 200 if none is specified.
 
+### Inspection
+For testing or debugging purposes, it is possible to extract a list of http requests. Simply call the `requestsMade` function as follows:
+
+	var mock = require('protractor-http-mock');
+	...
+
+	  expect(mock.requestsMade()).toEqual([
+			{ url : '/default', method : 'GET' },
+			{ url : '/users', method : 'GET' }
+		]);
+		
 ### Examples
-Included in the code base are examples on how to use this plugin. Please take a look at the "examples" folder.
+Included in the code base are examples on how to use all the features of this plugin. Please take a look if you have any questions.
 
 To run these tests locally, please follow these steps from the root directory:
 
@@ -129,4 +140,5 @@ To run these tests locally, please follow these steps from the root directory:
 
 ### Contributions
 
+* Thanks to `nielssj` for the `requestsMade` functionality and for pointing out a few bugs.
 * Thanks to `nadersoliman` for his input and pull request on allowing the user to set custom name for the protractor configuration file.

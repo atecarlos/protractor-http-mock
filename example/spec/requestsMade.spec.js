@@ -7,7 +7,7 @@ describe('requests made', function(){
 		mock.teardown();
 	});
 
-	it('can evaluate requests made', function(){
+	beforeEach(function(){
 		mock([{
 			request: {
 				path: '/users',
@@ -27,11 +27,22 @@ describe('requests made', function(){
 			}
 		}]);
 
-		get();
+		get();		
+	});
 
+	it('can evaluate requests made', function(){
 		expect(mock.requestsMade()).toEqual([
 			{ url : '/default', method : 'GET' },
 			{ url : '/users', method : 'GET' }
 		]);
-	})
+	});
+
+	// todo: finish this spec
+	// add clear functionality.
+	// add this new feature to docs.
+	// publish new version
+	it('can clear requests', function(){
+		mock.clearRequests();
+		expect(mock.requestsMade()).toEqual([]);
+	});
 });
