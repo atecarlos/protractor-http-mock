@@ -138,7 +138,8 @@ To run these tests locally, please follow these steps from the root directory:
 3. `npm run example`
 
 
-### Contributions
+### Contributions and recognition
 
-* Thanks to `nielssj` for the `requestsMade` functionality and for pointing out a few bugs.
-* Thanks to `nadersoliman` for his input and pull request on allowing the user to set custom name for the protractor configuration file.
+* `ReactiveRaven` for adding convenience methods key for getting this to work with ngResource.
+* `nielssj` for the `requestsMade` functionality and for pointing out a few bugs.
+* `nadersoliman` for his input and pull request on allowing the user to set custom name for the protractor configuration file.
