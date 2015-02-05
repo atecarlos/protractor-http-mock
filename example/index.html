@@ -33,9 +33,14 @@
 		</div>
 
 		<div ng-controller="ConvenienceController as ctrl">
-			<input ng-model="ctrl.newConv" />
-			<input ng-model="ctrl.idToRemove" />
+			<input ng-model="ctrl.input" />
+			<input ng-model="ctrl.id" />
+
+			<button id="conv-head" ng-click="ctrl.getMeta()">Head</button>
 			<button id="conv-save" ng-click="ctrl.save()">Save</button>
+			<button id="conv-update" ng-click="ctrl.update()">Update</button>
+			<button id="conv-patch" ng-click="ctrl.patch()">Patch</button>
+			<button id="conv-jsonp" ng-click="ctrl.jsonp()">JSONP</button>
 			<button id="conv-delete" ng-click="ctrl.delete()">Delete</button>
 
 			<span id="conv-data">{{ ctrl.data }}</span>

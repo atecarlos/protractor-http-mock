@@ -34,6 +34,18 @@ angular
 			},
 			delete: function(id){
 				return $http.delete('/convs/' + id)
+			},
+			head: function(){
+				return $http.head('/convs');
+			},
+			jsonp: function(){
+				return $http.jsonp('/convs');
+			},
+			patch: function(id, data){
+				return $http.patch('/convs/' + id, data);
+			},
+			put: function(id, data){
+				return $http.put('/convs/' + id, data);
 			}
 		}
 	})
@@ -96,27 +108,53 @@ angular
 			self.status = status;
 		}
 
-		function errorHandler(data, status){
-			self.showError = true;
+		function successHandler(data, status){
+			self.showError = false;
 			handler(data, status);
 		}
 
+		function errorHandler(response){
+			self.showError = true;
+			handler(response.data, response.status);
+		}
+
 		convenienceService.get()
-			.success(handler)
+			.success(successHandler)
 			.error(errorHandler);
 
+		self.getMeta = function(){
+			convenienceService.head()
+				.success(successHandler)
+				.error(errorHandler);
+		};
+
 		self.save = function(){
-			convenienceService.post({ type: self.newConv })
-				.success(handler)
+			convenienceService.post({ test: self.input })
+				.success(successHandler)
 				.error(errorHandler);
 		};
 
 		self.delete = function(){
-			convenienceService.delete(self.idToRemove)
-				.success(handler)
+			convenienceService.delete(self.id)
+				.success(successHandler)
 				.error(errorHandler);
 		};
 
 		self.update = function(){
+			convenienceService.put(self.id, { test: self.input })
+				.success(successHandler)
+				.error(errorHandler);
+		};
+
+		self.patch = function(){
+			convenienceService.patch(self.id, { test: self.input })
+				.success(successHandler)
+				.error(errorHandler);
+		};
+
+		self.jsonp = function(){
+			convenienceService.jsonp()
+				.success(successHandler)
+				.error(errorHandler);
 		};
 	});

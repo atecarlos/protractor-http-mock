@@ -15,6 +15,14 @@ describe('requests made', function(){
 		expect(element(by.id('conv-status')).getText()).toBe(status.toString());
 	}
 
+	function setId(val){
+		element(by.model('ctrl.id')).clear().sendKeys(val);
+	}
+
+	function setInput(val){
+		element(by.model('ctrl.input')).clear().sendKeys(val);
+	}
+
 	it('works with $http convenience methods', function(){
 		mock([
 			{
@@ -24,6 +32,15 @@ describe('requests made', function(){
 				},
 				response: {
 					data: 'get - success!'
+				}
+			},
+			{
+				request: {
+					path: '/convs',
+					method: 'HEAD'
+				},
+				response: {
+					data: 'head - success!'
 				}
 			},
 			{
@@ -45,24 +62,114 @@ describe('requests made', function(){
 					data: 'delete - success',
 					status: 202
 				}
+			},
+			{
+				request: {
+					path: 'convs/3',
+					method: 'DELETE'
+				},
+				response: {
+					data: 'delete - error',
+					status: 400
+				}
+			},
+			{
+				request: {
+					path: 'convs/3',
+					method: 'PUT'
+				},
+				response: {
+					data: 'put - success',
+					status: 203
+				}
+			},
+			{
+				request: {
+					path: 'convs/3',
+					method: 'PATCH'
+				},
+				response: {
+					data: 'patch - error',
+					status: 401
+				}
+			},
+			{
+				request: {
+					path: 'convs/4',
+					method: 'PATCH'
+				},
+				response: {
+					data: 'patch - success',
+					status: 204
+				}
+			},
+			{
+				request: {
+					path: 'convs',
+					method: 'JSONP'
+				},
+				response: {
+					data: 'jsonp - success',
+					status: 205
+				}
 			}
 		]);
 
 		// get
-
 		get();
 		assertData('get - success!');
 		assertStatus(200);
 
+		// head
+		element(by.id('conv-head')).click();
+		assertData('head - success!');
+		assertStatus(200);
+
 		// post
-		element(by.model('ctrl.newConv')).sendKeys('my new conv');
+		setInput('my new conv');
 		element(by.id('conv-save')).click();
 		assertData('post - success!');
 		assertStatus(201);
 		
-		element(by.model('ctrl.idToRemove')).sendKeys('2');
+		// delete
+		setId('2');
 		element(by.id('conv-delete')).click();
 		assertData('delete - success');
-		assertStatus(202)
+		assertStatus(202);
+
+		// delete - error
+		setId('3');
+		element(by.id('conv-delete')).click();
+		expect(element(by.id('conv-error')).isDisplayed()).toBe(true);
+		assertData('delete - error');
+		assertStatus(400);
+
+		// put
+		setId('3');
+		setInput('my updated conv');
+		element(by.id('conv-update')).click();
+		expect(element(by.id('conv-error')).isDisplayed()).toBe(false);
+		assertData('put - success');
+		assertStatus(203);
+
+		// patch - error
+		element(by.id('conv-patch')).click();
+		expect(element(by.id('conv-error')).isDisplayed()).toBe(true);
+		assertData('patch - error');
+		assertStatus(401);
+
+		// patch
+		setId('4');
+		setInput('my patched conv');
+		element(by.id('conv-patch')).click();
+		assertData('patch - success');
+		assertStatus(204);
+
+		// jsonp
+		setId('5');
+		setInput('my jsonp conv');
+		element(by.id('conv-jsonp')).click();
+		assertData('jsonp - success');
+		assertStatus(205);
 	});
 });
