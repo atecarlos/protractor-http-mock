@@ -94,7 +94,7 @@ or
 
 
 ### Schema
-The full schema for defining your mocks is as follows:
+The full GET schema for defining your mocks is as follows:
 
 	  request: {
 	    path: '/products/1/items',
@@ -109,8 +109,29 @@ The full schema for defining your mocks is as follows:
 	    status: 500 // The HTTP status code for the mocked response. This is an optional field.
 	  }
 
+A full mock for a POST call takes the following options:
+
+	  request: {
+	    path: '/products/1/items',
+	    method: 'POST',
+	    data: { // These match POST data. This is an optional field.
+	      status: 'onsale',
+	      title: 'Blue Jeans',
+        price: 24.99
+	    }
+	  },
+	  response: {
+	    data: {
+	      status: 'onsale',
+	      title: 'Blue Jeans',
+        id: 'abc123',
+        price: 24.99
+      }, // This is the return value for the matched request
+	    status: 204 // The HTTP status code for the mocked response. This is an optional field.
+	  }
+
 #### Request
-Defining `params` will help the plugin match more specific responses but it is not required. If the `params` are not set, then it will not be taken into account when matching a request.
+Defining `params` or `data` will help the plugin match more specific responses but neither is required. If the `params` and/or `data` are not set, then it will not be taken into account when matching a request.
 
 Protractor mock will respond with the **last** matched request in case there are several matches.
 
