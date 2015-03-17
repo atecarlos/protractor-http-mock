@@ -143,3 +143,4 @@ To run these tests locally, please follow these steps from the root directory:
 * `ReactiveRaven` for adding convenience methods key for getting this to work with ngResource.
 * `nielssj` for the `requestsMade` functionality and for pointing out a few bugs.
 * `nadersoliman` for his input and pull request on allowing the user to set custom name for the protractor configuration file.
+* `kharnt0x` for submitting a bug fix for proper callback handling.

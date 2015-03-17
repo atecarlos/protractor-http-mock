@@ -113,9 +113,9 @@ angular
 			handler(data, status);
 		}
 
-		function errorHandler(response){
+		function errorHandler(data, status){
 			self.showError = true;
-			handler(response.data, response.status);
+			handler(data, status);
 		}
 
 		convenienceService.get()
