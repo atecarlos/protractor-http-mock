@@ -165,3 +165,4 @@ To run these tests locally, please follow these steps from the root directory:
 * `nielssj` for the `requestsMade` functionality and for pointing out a few bugs.
 * `nadersoliman` for his input and pull request on allowing the user to set custom name for the protractor configuration file.
 * `kharnt0x` for submitting a bug fix for proper callback handling.
+* `zigzackattack` for his contribution on post data matching.
