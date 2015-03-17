@@ -43,7 +43,7 @@ describe('requests made', function(){
 
 	it('can evaluate requests made', function(){
 		element(by.model('ctrl.newUser')).sendKeys('my-new-user');
-		element(by.css('.form button')).click();
+		element(by.css('.form #save')).click();
 
 		expect(mock.requestsMade()).toEqual([
 			{ url : '/default', method : 'GET' },

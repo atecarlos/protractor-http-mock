@@ -117,16 +117,16 @@ A full mock for a POST call takes the following options:
 	    data: { // These match POST data. This is an optional field.
 	      status: 'onsale',
 	      title: 'Blue Jeans',
-        price: 24.99
+          price: 24.99
 	    }
 	  },
 	  response: {
-	    data: {
+	    data: { // This is the return value for the matched request
 	      status: 'onsale',
 	      title: 'Blue Jeans',
-        id: 'abc123',
-        price: 24.99
-      }, // This is the return value for the matched request
+          id: 'abc123',
+          price: 24.99
+        },
 	    status: 204 // The HTTP status code for the mocked response. This is an optional field.
 	  }
 
@@ -150,7 +150,7 @@ For testing or debugging purposes, it is possible to extract a list of http requ
 		]);
 		
 ### Examples
-Included in the code base are examples on how to use all the features of this plugin. Please take a look if you have any questions.
+Included in the code base is an extensive list examples on how to use all the features of this plugin. Please take a look if you have any questions.
 
 To run these tests locally, please follow these steps from the root directory:
 

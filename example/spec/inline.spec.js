@@ -95,7 +95,7 @@ describe('inline', function(){
 			expect(element(by.binding('ctrl.error')).isDisplayed()).toBe(false);
 
 			element(by.model('ctrl.newUser')).sendKeys('my-new-user');
-			element(by.css('.form button')).click();
+			element(by.css('.form #save')).click();
 
 			var succElement = element(by.binding('ctrl.success'));
 			expect(succElement.isDisplayed()).toBe(true);
@@ -176,7 +176,7 @@ describe('inline', function(){
 			expect(errElement.isDisplayed()).toBe(true);
 			expect(errElement.getText()).toBe('help!');
 
-			element(by.css('.form button')).click();
+			element(by.css('.form #save')).click();
 			expect(errElement.getText()).toBe('post error!');
 		});
 	});

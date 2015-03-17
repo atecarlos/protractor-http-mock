@@ -75,16 +75,32 @@ angular
 				self.error = response.data.error;
 			});
 
+		function thenHandler(){
+			self.success = 'new user saved: ' + self.newUser;
+			self.newUser = '';
+
+			self.showError = false;
+			self.error = null;
+		}
+
+		function catchHandler(response){
+			self.showError = true;
+			self.error = response.data.error;
+
+			self.success = null;
+			self.newUser = null;
+		}
+
 		self.save = function(){
 			userService.post({ name: self.newUser })
-				.then(function(){
-					self.success = 'new user saved: ' + self.newUser;
-					self.newUser = '';
-				})
-				.catch(function(response){
-					self.showError = true;
-					self.error = response.data.error;
-				});
+				.then(thenHandler)
+				.catch(catchHandler);
+		};
+
+		self.saveName = function(){
+			userService.post(self.newUser)
+				.then(thenHandler)
+				.catch(catchHandler);
 		};
 	})
 	.controller('GroupController', function(groupService){
