@@ -49,6 +49,10 @@
 			<span id="conv-error" ng-show="ctrl.showError">My convenience error</span>
 		</div>
 
+		<div ng-controller="HttpDefaultsController as ctrl">
+			<pre id="http-defaults" ng-show="ctrl.hasHttpDefaults">$http defaults are set</pre>
+		</div>
+
 		<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
 		<script src="app/app.js"></script>
 	</body>

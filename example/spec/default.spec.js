@@ -1,7 +1,7 @@
 var mock = require('../../index'),
 	get = require('./get');
 
-describe('from file', function(){
+describe('default file', function(){
 	afterEach(function(){
 		mock.teardown();
 	});

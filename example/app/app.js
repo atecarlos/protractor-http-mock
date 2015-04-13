@@ -173,4 +173,7 @@ angular
 				.success(successHandler)
 				.error(errorHandler);
 		};
+	})
+	.controller('HttpDefaultsController', function($http){
+		this.hasHttpDefaults = !!$http.defaults;
 	});
