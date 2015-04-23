@@ -116,7 +116,7 @@ angular
 
 		self.search = function(){
 
-			userService.getBy(self.query, self.queryCity)
+			userService.getBy(self.query, self.queryCity || undefined)
 				.then(function(response){
 					self.foundUser = response.data.name;
 					self.success = 'User found: ' + self.query;
@@ -168,7 +168,9 @@ angular
 		};
 
 		self.save = function(){
-			convenienceService.post({ test: self.input })
+			var dataToPost = self.input ? { test: self.input } : undefined;
+
+			convenienceService.post(dataToPost)
 				.success(successHandler)
 				.error(errorHandler);
 		};

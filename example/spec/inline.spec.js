@@ -72,6 +72,9 @@ describe('inline', function(){
 					request: {
 						path: 'users/new',
 						method: 'POST',
+						data: {
+							name: 'my-new-user'
+						}
 					},
 					response: {
 						status: 200
@@ -153,7 +156,8 @@ describe('inline', function(){
 				{
 					request: {
 						path: '/users/new',
-						method: 'POST'
+						method: 'POST',
+						data: {}
 					},
 					response: {
 						status: 500,

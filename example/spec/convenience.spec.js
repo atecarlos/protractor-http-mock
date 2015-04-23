@@ -23,6 +23,10 @@ describe('requests made', function(){
 		element(by.model('ctrl.input')).clear().sendKeys(val);
 	}
 
+	function clearInput(){
+		element(by.model('ctrl.input')).clear();
+	}
+
 	it('works with $http convenience methods', function(){
 		mock([
 			{
@@ -46,7 +50,10 @@ describe('requests made', function(){
 			{
 				request: {
 					path: 'convs/new',
-					method: 'POST'
+					method: 'POST',
+					data: {
+						test: 'my new conv'
+					}
 				},
 				response: {
 					data: 'post - success!',
@@ -76,7 +83,10 @@ describe('requests made', function(){
 			{
 				request: {
 					path: 'convs/3',
-					method: 'PUT'
+					method: 'PUT',
+					data: {
+						test: 'my updated conv'
+					}
 				},
 				response: {
 					data: 'put - success',
@@ -86,7 +96,10 @@ describe('requests made', function(){
 			{
 				request: {
 					path: 'convs/3',
-					method: 'PATCH'
+					method: 'PATCH',
+					data: {
+						test: 'my updated conv'
+					}
 				},
 				response: {
 					data: 'patch - error',
@@ -96,7 +109,10 @@ describe('requests made', function(){
 			{
 				request: {
 					path: 'convs/4',
-					method: 'PATCH'
+					method: 'PATCH',
+					data: {
+						test: 'my patched conv'
+					}
 				},
 				response: {
 					data: 'patch - success',
@@ -130,6 +146,7 @@ describe('requests made', function(){
 		element(by.id('conv-save')).click();
 		assertData('post - success!');
 		assertStatus(201);
+		clearInput();
 		
 		// delete
 		setId('2');
@@ -147,6 +164,7 @@ describe('requests made', function(){
 		// put
 		setId('3');
 		setInput('my updated conv');
+		
 		element(by.id('conv-update')).click();
 		expect(element(by.id('conv-error')).isDisplayed()).toBe(false);
 		assertData('put - success');
@@ -158,6 +176,8 @@ describe('requests made', function(){
 		assertData('patch - error');
 		assertStatus(401);
 
+		clearInput();
+
 		// patch
 		setId('4');
 		setInput('my patched conv');
@@ -167,7 +187,6 @@ describe('requests made', function(){
 
 		// jsonp
 		setId('5');
-		setInput('my jsonp conv');
 		element(by.id('conv-jsonp')).click();
 		assertData('jsonp - success');
 		assertStatus(205);

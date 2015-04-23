@@ -30,7 +30,10 @@ describe('requests made', function(){
 			{
 				request: {
 					path: 'users/new',
-					method: 'POST'
+					method: 'POST',
+					data: {
+						name: 'my-new-user'
+					}
 				},
 				response: {
 					status: 200
@@ -52,11 +55,13 @@ describe('requests made', function(){
 		]);
 	});
 
-	// todo: finish this spec
-	// add clear functionality.
-	// add this new feature to docs.
-	// publish new version
 	it('can clear requests', function(){
+		mock.clearRequests();
+		expect(mock.requestsMade()).toEqual([]);
+
+		element(by.model('ctrl.newUser')).sendKeys('my-new-user');
+		element(by.css('.form #save')).click();
+
 		mock.clearRequests();
 		expect(mock.requestsMade()).toEqual([]);
 	});

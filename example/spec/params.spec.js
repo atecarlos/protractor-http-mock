@@ -81,5 +81,13 @@ describe('get query strings', function(){
 
 		expect(element(by.id('user-data')).getText()).toContain('Charlie in Houston');
 		expect(element(by.id('successMsg')).getText()).toBe('User found: Charlie');
+
+		element(by.id('user-query')).clear().sendKeys('unknown');
+		element(by.id('user-query-city')).clear();
+		searchButton.click();
+
+		var errElement = element(by.id('errorMsg'));
+		expect(errElement.isDisplayed()).toBe(true);
+		expect(errElement.getText()).toBe('no user found');
 	});
 });
