@@ -24,6 +24,16 @@ describe('post data', function(){
 				request: {
 					path: 'users/new',
 					method: 'POST',
+					data: 'Other Dog'
+				},
+				response: {
+					status: 200
+				}
+			},
+			{
+				request: {
+					path: 'users/new',
+					method: 'POST',
 					data: 'Brian'
 				},
 				response: {
@@ -46,6 +56,8 @@ describe('post data', function(){
 
 		element(by.model('ctrl.newUser')).sendKeys('Brian');
 		element(by.css('.form #save-name')).click();
+
+		browser.pause();
 
 		expect(succElement.isDisplayed()).toBe(false);
 		var errElement = element(by.binding('ctrl.error'));

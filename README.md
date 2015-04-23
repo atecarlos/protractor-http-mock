@@ -148,6 +148,8 @@ For testing or debugging purposes, it is possible to extract a list of http requ
 			{ url : '/default', method : 'GET' },
 			{ url : '/users', method : 'GET' }
 		]);
+
+It is also possible to clear the list of requests with the `clearRequests()` method.
 		
 ### Examples
 Included in the code base is an extensive list examples on how to use all the features of this plugin. Please take a look if you have any questions.
