@@ -99,7 +99,7 @@ The full GET schema for defining your mocks is as follows:
 	  request: {
 	    path: '/products/1/items',
 	    method: 'GET',
-	    params: { // These match the querystring params. This is an optional field.
+	    params: { // These match params as they would be passed in the $http method. This is an optional field.
 	      page: 2,
 	      status: 'onsale'
 	    }

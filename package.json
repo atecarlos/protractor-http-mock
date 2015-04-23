@@ -4,7 +4,7 @@
   "description": "Mock HTTP calls in your protractor specs.",
   "main": "index.js",
   "scripts": {
-    "test": "grunt test"
+    "example": "grunt example"
   },
   "author": "Carlos Atencio",
   "license": "BSD-2-Clause",
@@ -20,7 +20,7 @@
     "type": "git",
     "url": "https://github.com/atecarlos/protractor-http-mock"
   },
-  "scripts": {
-    "example": "grunt example"
+  "dependencies": {
+    "query-string": "^1.0.0"
   }
 }

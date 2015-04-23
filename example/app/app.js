@@ -14,6 +14,16 @@ angular
 			},
 			post: function(data){
 				return $http({ method: 'POST', url: '/users/new', data: data });
+			},
+			getBy: function(name, city){
+				return $http({ 
+					method: 'GET', 
+					url: '/users',
+					params: {
+						name: name,
+						city: city
+					}
+				});
 			}
 		};
 	})
@@ -65,6 +75,7 @@ angular
 		self.error = null;
 		self.success = null;
 		self.showError = false;
+		self.foundUser = null;
 
 		userService.get()
 			.then(function(response){
@@ -100,6 +111,18 @@ angular
 		self.saveName = function(){
 			userService.post(self.newUser)
 				.then(thenHandler)
+				.catch(catchHandler);
+		};
+
+		self.search = function(){
+
+			userService.getBy(self.query, self.queryCity)
+				.then(function(response){
+					self.foundUser = response.data.name;
+					self.success = 'User found: ' + self.query;
+					self.showError = false;
+					self.error = null;
+				})
 				.catch(catchHandler);
 		};
 	})
