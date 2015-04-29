@@ -36,6 +36,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-protractor-runner');
 
+    grunt.registerTask('host-example', ['connect:example:keepalive']);
     grunt.registerTask('example', ['connect:example', 'protractor:example']);
     grunt.registerTask('test', ['jasmine_node']);
 };

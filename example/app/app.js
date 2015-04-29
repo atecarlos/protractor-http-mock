@@ -114,6 +114,16 @@ angular
 				.catch(catchHandler);
 		};
 
+		self.addDefaultUsers = function(){
+			userService.post({
+				group: self.newUser,
+				users: [
+					{ name: 'One' },
+					{ name: 'Two' }
+				]
+			}).then(thenHandler).catch(catchHandler);
+		};
+
 		self.search = function(){
 
 			userService.getBy(self.query, self.queryCity || undefined)
