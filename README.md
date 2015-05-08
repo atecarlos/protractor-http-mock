@@ -67,6 +67,8 @@ Make sure to clean up after test execution. This should be typically done in the
 	afterEach(function(){
 	  mock.teardown();
 	});
+	
+Please note that the `mock()` function needs to be called before the browser opens. If you have different mock data for different tests, please make sure that, either the tests always start in a new browser window, or that its possible to setup all the mocks for each test case before any of tests start running.
 
 ### Mock files
 Mocks can also be loaded from physical files located in the `mocks.dir` directory that we defined in our configuration: 
