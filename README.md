@@ -131,7 +131,7 @@ A full mock for a POST call takes the following options:
 	  }
 
 #### Request
-Defining `params` or `data` will help the plugin match more specific responses but neither is required. If the `params` and/or `data` are not set, then it will not be taken into account when matching a request.
+Defining `params` or `data` will help the plugin match more specific responses but neither is required. Both correspond to their matching objects as they would be passed into the $http object call.
 
 Protractor mock will respond with the **last** matched request in case there are several matches.
 
