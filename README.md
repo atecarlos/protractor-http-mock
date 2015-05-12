@@ -101,13 +101,17 @@ The full GET schema for defining your mocks is as follows:
 	  request: {
 	    path: '/products/1/items',
 	    method: 'GET',
-	    params: { // These match params as they would be passed in the $http method. This is an optional field.
+	    params: { // These match params as they would be passed to the $http service. This is an optional field.
 	      page: 2,
 	      status: 'onsale'
+	    },
+	    queryString: { // These match query string parameters that are part of the URL as passed in to the $http service. This is an optional field.
+	      param1: 'My first qs parameters',
+	      param2: 'Second parameter'
 	    }
 	  },
 	  response: {
-	    data: {}, // This is the return value for the matched request
+	  	data: {}, // This is the return value for the matched request
 	    status: 500 // The HTTP status code for the mocked response. This is an optional field.
 	  }
 
@@ -131,6 +135,8 @@ A full mock for a POST call takes the following options:
         },
 	    status: 204 // The HTTP status code for the mocked response. This is an optional field.
 	  }
+
+PUT, DELETE, HEAD, PATCH, and JSONP methods are also supported. Please see the examples in the source code for more information.
 
 #### Request
 Defining `params` or `data` will help the plugin match more specific responses but neither is required. Both correspond to their matching objects as they would be passed into the $http object call.
@@ -165,6 +171,7 @@ To run these tests locally, please follow these steps from the root directory:
 
 ### Contributions and recognition
 
+* `jdgblinq` for his contribution to query string matching.
 * `ReactiveRaven` for adding convenience methods key for getting this to work with ngResource.
 * `nielssj` for the `requestsMade` functionality and for pointing out a few bugs.
 * `nadersoliman` for his input and pull request on allowing the user to set custom name for the protractor configuration file.

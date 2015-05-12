@@ -24,6 +24,12 @@ angular
 						city: city
 					}
 				});
+			},
+			getByQuery: function(name, city){
+				return $http({
+					method: 'GET',
+					url: '/users?name=' + encodeURIComponent(name) + '&city=' + encodeURIComponent(city)
+				})
 			}
 		};
 	})
@@ -124,17 +130,24 @@ angular
 			}).then(thenHandler).catch(catchHandler);
 		};
 
-		self.search = function(){
+		function searchHandler(response){
+			self.foundUser = response.data.name;
+			self.success = 'User found: ' + self.query;
+			self.showError = false;
+			self.error = null;
+		}
 
+		self.search = function(){
 			userService.getBy(self.query, self.queryCity || undefined)
-				.then(function(response){
-					self.foundUser = response.data.name;
-					self.success = 'User found: ' + self.query;
-					self.showError = false;
-					self.error = null;
-				})
+				.then(searchHandler)
 				.catch(catchHandler);
 		};
+
+		self.searchByQuery = function(){
+			userService.getByQuery(self.query, self.queryCity)
+				.then(searchHandler)
+				.catch(catchHandler);
+		}
 	})
 	.controller('GroupController', function(groupService){
 		var self = this;
