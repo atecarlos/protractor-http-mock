@@ -10,8 +10,7 @@ describe('get query strings', function(){
 					method: 'GET'	
 				},
 				response: {
-					status: 200,
-					data: []
+					status: 200
 				}
 			},
 			{

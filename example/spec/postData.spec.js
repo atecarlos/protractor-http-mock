@@ -11,20 +11,22 @@ describe('post data', function(){
 			{
 				request: {
 					path: 'users/new',
-					method: 'POST',
-					data: {
-						name: 'Stewie'
-					}
+					method: 'POST'
 				},
 				response: {
-					status: 200
+					status: 400,
+					data: {
+						error: 'generic response'
+					}
 				}
 			},
 			{
 				request: {
 					path: 'users/new',
 					method: 'POST',
-					data: 'Other Dog'
+					data: {
+						name: 'Stewie'
+					}
 				},
 				response: {
 					status: 200
@@ -47,18 +49,24 @@ describe('post data', function(){
 
 		get();
 
-		element(by.model('ctrl.newUser')).sendKeys('Stewie');
+		var succElement = element(by.binding('ctrl.success'));
+		var errElement = element(by.binding('ctrl.error'));
+
 		element(by.css('.form #save')).click();
 
-		var succElement = element(by.binding('ctrl.success'));
+		expect(succElement.isDisplayed()).toBe(false);
+		expect(errElement.isDisplayed()).toBe(true);
+		expect(errElement.getText()).toBe('generic response');
+
+		element(by.model('ctrl.newUser')).sendKeys('Stewie');
+		element(by.css('.form #save')).click();
 		expect(succElement.isDisplayed()).toBe(true);
+		expect(errElement.isDisplayed()).toBe(false);
 		expect(succElement.getText()).toBe('new user saved: Stewie');
 
 		element(by.model('ctrl.newUser')).sendKeys('Brian');
 		element(by.css('.form #save-name')).click();
-
 		expect(succElement.isDisplayed()).toBe(false);
-		var errElement = element(by.binding('ctrl.error'));
 		expect(errElement.isDisplayed()).toBe(true);
 		expect(errElement.getText()).toBe('no dogs allowed!');
 	});

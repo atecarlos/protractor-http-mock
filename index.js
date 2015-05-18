@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = require('./lib/init-data');
+module.exports = require('./lib/initData');

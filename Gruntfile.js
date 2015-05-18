@@ -20,6 +20,11 @@ module.exports = function(grunt) {
                 options: {
                     base: 'example'   
                 }
+            },
+            'client-test': {
+                options: {
+                    base: '.'
+                }
             }
         },
         protractor: {
@@ -28,6 +33,30 @@ module.exports = function(grunt) {
                 //debug: true
             },
             example: {}
+        },
+        browserify: {
+            test: {
+                files: {
+                    'tests/bundle/httpMock.js': ['lib/httpMock.js']
+                },
+                options: {
+                    browserifyOptions: {
+                        standalone: 'httpMock'
+                    }
+                }
+            }
+        },
+        jasmine: {
+            test: {
+                src: 'tests/bundle/httpMock.js',
+                options: {
+                    specs: 'tests/*test.js',
+                    vendor: [
+                        'http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.js'
+                    ],
+                    template: 'tests/template.tmpl'
+                }
+            }
         }
     });
 
@@ -35,8 +64,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-jasmine-node');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-protractor-runner');
+    grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
 
     grunt.registerTask('host-example', ['connect:example:keepalive']);
     grunt.registerTask('example', ['connect:example', 'protractor:example']);
     grunt.registerTask('test', ['jasmine_node']);
+    grunt.registerTask('client-test', ['browserify:test', 'jasmine:test']);
+
+    grunt.registerTask('verify', ['test', 'client-test', 'example']);
 };
