@@ -11,8 +11,42 @@ function mockTemplate() {
 
 	newModule.requests = [];
 
-	newModule.config(['$provide', function($provide){
-		$provide.decorator('$http', ['$delegate', '$q', function($http, $q) {
+	newModule.config(['$provide', '$httpProvider', function($provide, $httpProvider){
+		$provide.decorator('$http', ['$delegate', '$q', '$injector', function($http, $q, $injector) {
+      var interceptors = $httpProvider.interceptors;
+
+      function getInterceptor(interceptorExpression) {
+        if (angular.isString(interceptorExpression)) {
+          return $injector.get(interceptorExpression);
+        } else {
+          return $injector.invoke(interceptorExpression);
+        }
+      }
+
+      function getTransformedRequestConfig(config) {
+        for (var i = 0; i < interceptors.length; i++) {
+          var interceptor = getInterceptor(interceptors[i]);
+
+          if (interceptor.request) {
+            config = interceptor.request(config);
+          }
+        }
+
+        return config;
+      }
+
+      function getTransformedResponse(response) {
+        for (var i = interceptors.length - 1; i >= 0; i--) {
+          var interceptor = getInterceptor(interceptors[i]);
+
+          if (interceptor.response) {
+            response = interceptor.response(response);
+          }
+        }
+
+        return response;
+      }
+
 			function endsWith(url, path){
 				var questionMarkIndex = url.indexOf('?');
 
@@ -64,10 +98,10 @@ function mockTemplate() {
 
 				return expectation;
 			}
-			
+
 			function wrapWithSuccessError(promise) {
 				var myPromise = promise;
-				
+
 				myPromise.success = function(callback) {
 					myPromise.then(function(response) {
 						callback(response.data, response.status, response.headers, response.config);
@@ -91,34 +125,35 @@ function mockTemplate() {
 
 			function httpMock(config){
 				var prom;
-				var expectation = matchExpectation(config);
+        var transformedConfig = getTransformedRequestConfig(angular.copy(config));
+				var expectation = matchExpectation(transformedConfig);
 
 				if(expectation){
 					var deferred = $q.defer();
 
-					newModule.requests.push(config);
+					newModule.requests.push(transformedConfig);
 
 					setTimeout(function(){
+            var resolvedResponse;
+
 						expectation.response = expectation.response || {};
-						
-						var response = {
-							data: expectation.response.data || {},
-							config: config,
-							headers: function(){}
-						};
+            resolvedResponse = angular.copy(expectation.response);
+            resolvedResponse.config = transformedConfig;
+            resolvedResponse.headers = function () {};
+            resolvedResponse = getTransformedResponse(resolvedResponse);
 
-						response.status = expectation.response.status || 200;
+						resolvedResponse.status = resolvedResponse.status || 200;
 
-						if(statusIsSuccessful(response.status)){
-							deferred.resolve(response);
-						}else{
-							deferred.reject(response);
+						if (statusIsSuccessful(resolvedResponse.status)) {
+							deferred.resolve(resolvedResponse);
+						} else {
+							deferred.reject(resolvedResponse);
 						}
 
 					}, 0);
 
 					prom = wrapWithSuccessError(deferred.promise);
-				}else{
+				} else {
 					prom = $http(config);
 				}
 
@@ -185,11 +220,11 @@ function mockTemplate() {
 			};
 
 			httpMock.defaults = $http.defaults;
-			
+
 			return httpMock;
 		}]);
 	}]);
-	
+
 	newModule.clearRequests = function(){
 		newModule.requests = [];
 	};
@@ -281,7 +316,7 @@ module.exports = function(expectations){
 	} else if (typeof module !== 'undefined' && module.exports) {
 		module.exports = queryString;
 	} else {
-		window.queryString = queryString;
+		self.queryString = queryString;
 	}
 })();
 
