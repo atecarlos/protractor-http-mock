@@ -171,9 +171,10 @@ To run these tests locally, please follow these steps from the root directory:
 
 ### Contributions and recognition
 
-* `jdgblinq` for his contribution to query string matching.
+* `jdgblinq` for their contribution to query string matching.
 * `ReactiveRaven` for adding convenience methods key for getting this to work with ngResource.
 * `nielssj` for the `requestsMade` functionality and for pointing out a few bugs.
-* `nadersoliman` for his input and pull request on allowing the user to set custom name for the protractor configuration file.
+* `nadersoliman` for their input and pull request on allowing the user to set custom name for the protractor configuration file.
 * `kharnt0x` for submitting a bug fix for proper callback handling.
-* `zigzackattack` for his contribution on post data matching.
+* `zigzackattack` for their contribution on post data matching.
+* `matthewjh` for their pull request to allow the plugin to play nice with interceptors.
