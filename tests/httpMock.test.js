@@ -124,6 +124,30 @@ describe('http mock', function(){
 					data: 'jsonp response'
 				}
 			},
+			{
+				request: {
+					path: '/intercept',
+					interceptedRequest: true,
+					method: 'get'
+				},
+				response: {
+					data: {
+						name: 'intercept test'
+					}
+				}
+			},
+			{
+				request: {
+					path: '/anonymous-intercept',
+					interceptedAnonymousRequest: true,
+					method: 'get'
+				},
+				response: {
+					data: {
+						name: 'anonymous intercept test'
+					}
+				}
+			}
 		]);
 
 		mock();
@@ -319,5 +343,62 @@ describe('http mock', function(){
 		});
 	});
 
-	
+	describe('interceptors', function(){
+		module.config(['$provide', '$httpProvider', function($provide, $httpProvider){
+			$provide.factory('testInterceptor', function() {
+				return {
+					request: function(config){
+						if(config.url.match(/intercept/)){
+							config.interceptedRequest = true;
+						}
+
+						return config;
+					},
+
+					response: function(response){
+						if(response.config.url.match(/intercept/)){
+							response.data.interceptedResponse = true;
+						}
+
+						return response;
+					}
+				}
+			});
+
+			$httpProvider.interceptors.push('testInterceptor');
+
+			$httpProvider.interceptors.push(function(){
+				return {
+					request: function(config){
+						if(config.url.match(/anonymous-intercept/)){
+							config.interceptedAnonymousRequest = true;
+						}
+
+						return config;
+					}
+				}
+			});
+		}]);
+
+		it('allows intercepts through service factory functions', function(done){
+			http({
+				method: 'GET',
+				url: 'test-url.com/intercept'
+			}).then(function(response){
+				expect(response.data.interceptedResponse).toBe(true);
+				expect(response.data.name).toBe('intercept test');
+				done();
+			});
+		});
+
+		it('allows for intercepts through anonymous factory', function(done){
+			http({
+				method: 'GET',
+				url: 'test-url.com/anonymous-intercept'
+			}).then(function(response){
+				expect(response.data.name).toBe('anonymous intercept test');
+				done();
+			});
+		});
+	});
 });
