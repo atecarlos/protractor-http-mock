@@ -41,10 +41,15 @@ describe('requests made', function(){
 			}
 		]);
 
-		get();		
+		get();
 	});
 
 	it('can evaluate requests made', function(){
+		expect(mock.requestsMade()).toEqual([
+			{ url : '/default', method : 'GET' },
+			{ url : '/users', method : 'GET' }
+		]);
+		
 		element(by.model('ctrl.newUser')).sendKeys('my-new-user');
 		element(by.css('.form #save')).click();
 

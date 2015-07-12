@@ -173,6 +173,46 @@ describe('http mock', function(){
 						name: 'anonymous intercept test'
 					}
 				}
+			},
+			{
+				request: {
+					path: '/transform-request',
+					method: 'post',
+					data: {
+						name: 'test',
+						city: 'test city'
+					}
+				},
+				response: {
+					data: {
+						name: 'multiple transforms request test'
+					}
+				}
+			},
+			{
+				request: {
+					path: '/transform-request',
+					method: 'post',
+					data: {
+						name: 'test'
+					}
+				},
+				response: {
+					data: {
+						name: 'transform request test'
+					}
+				}
+			},
+			{
+				request: {
+					path: '/transform-response',
+					method: 'get'
+				},
+				response: {
+					data: {
+						name: 'test'
+					}
+				}
 			}
 		]);
 
@@ -465,6 +505,42 @@ describe('http mock', function(){
 			});
 		});
 
+		it('ignores header properties when their function return value is null', function(done){
+			http({
+				method: 'get',
+				url: 'my-api.com/user',
+				headers: {
+					'x-auth': 'pass',
+					'gzip-pro': 'yes',
+					'ignore-me': function(){
+						return null;
+					}
+				}
+			}).then(function(response){
+				expect(response.data).toBe('authentication passed');
+				done();
+			});
+		});
+	});
+
+	describe('transforms', function(){
+		it('allows multiple transform requests', function(done){
+			http.post('test-url.com/transform-request', {
+					name: 'transform test'
+				}, {
+				transformRequest: [function(data){
+					data.city = 'test city';
+					return data;
+				}, function(data){
+					data.name = 'test';
+					return data;
+				}]
+			}).then(function(response){
+				expect(response.data.name).toBe('multiple transforms request test');
+				done();
+			});
+		});
+
 		it('matches request by complex headers (include functions)', function(done){
 			http({
 				method: 'get',
@@ -483,19 +559,48 @@ describe('http mock', function(){
 			});
 		});
 
-		it('ignores header properties when their function return value is null', function(done){
-			http({
-				method: 'get',
-				url: 'my-api.com/user',
-				headers: {
-					'x-auth': 'pass',
-					'gzip-pro': 'yes',
-					'ignore-me': function(){
-						return null;
-					}
+		it('allows a single transform requests', function(done){
+			http.post('test-url.com/transform-request', {
+					name: 'transform test'
+				}, {
+				transformRequest: function(data){
+					data.name = 'test';
+					return data;
 				}
 			}).then(function(response){
-				expect(response.data).toBe('authentication passed');
+				expect(response.data.name).toBe('transform request test');
+				done();
+			});
+		});
+
+		it('allows multiple transform responses', function(done){
+			http({
+				method: 'GET',
+				url: 'test-url.com/transform-response',
+				transformResponse: [function (data){
+					data.name = 'transform response test';
+					return data;
+				}, function(data){
+					data.city = 'test response city';
+					return data;
+				}]
+			}).then(function(response){
+				expect(response.data.name).toBe('transform response test');
+				expect(response.data.city).toBe('test response city');
+				done();
+			});
+		});
+
+		it('allows a single transform responses', function(done){
+			http({
+				method: 'GET',
+				url: 'test-url.com/transform-response',
+				transformResponse: function (data){
+					data.name = 'transform response test';
+					return data;
+				}
+			}).then(function(response){
+				expect(response.data.name).toBe('transform response test');
 				done();
 			});
 		});
