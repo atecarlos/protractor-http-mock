@@ -108,6 +108,10 @@ The full GET schema for defining your mocks is as follows:
 	    queryString: { // These match query string parameters that are part of the URL as passed in to the $http service. This is an optional field.
 	      param1: 'My first qs parameters',
 	      param2: 'Second parameter'
+	    },
+	    headers: { //These match headers as the end result of the expression provided to the $http method.
+	    	head1: 'val1,
+	    	head2: 'val2'
 	    }
 	  },
 	  response: {
@@ -139,7 +143,9 @@ A full mock for a POST call takes the following options:
 PUT, DELETE, HEAD, PATCH, and JSONP methods are also supported. Please see the examples in the source code for more information.
 
 #### Request
-Defining `params` or `data` will help the plugin match more specific responses but neither is required. Both correspond to their matching objects as they would be passed into the $http object call.
+Defining `params`, `queryString`, `headers`, or `data` will help the plugin match more specific responses but neither is required. Both correspond to their matching objects as they would be passed into the $http object call.
+
+Headers must be defined as the headers that will be used in the http call. Therefore, if in the code to be tested, the headers are defined using properties with function values, these functions will be evaluated as per the $http specification and matched by end result.
 
 Protractor mock will respond with the **last** matched request in case there are several matches.
 

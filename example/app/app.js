@@ -30,6 +30,15 @@ angular
 					method: 'GET',
 					url: '/users?name=' + encodeURIComponent(name) + '&city=' + encodeURIComponent(city)
 				})
+			},
+			getAuthenticated: function(auth){
+				return $http({
+					method: 'GET',
+					url: '/users',
+					headers: {
+						auth: auth
+					}
+				})
 			}
 		};
 	})
@@ -82,6 +91,7 @@ angular
 		self.success = null;
 		self.showError = false;
 		self.foundUser = null;
+		self.authenticated = false;
 
 		userService.get()
 			.then(function(response){
@@ -147,7 +157,15 @@ angular
 			userService.getByQuery(self.query, self.queryCity)
 				.then(searchHandler)
 				.catch(catchHandler);
-		}
+		};
+
+		self.getAuthenticated = function(){
+			userService.getAuthenticated(self.authenticated)
+				.then(function(response){
+					self.users = response.data;
+				})
+				.catch(catchHandler);
+		};
 	})
 	.controller('GroupController', function(groupService){
 		var self = this;
