@@ -184,3 +184,4 @@ To run these tests locally, please follow these steps from the root directory:
 * `kharnt0x` for submitting a bug fix for proper callback handling.
 * `zigzackattack` for their contribution on post data matching.
 * `matthewjh` for their pull request to allow the plugin to play nice with interceptors.
+* `stevehenry13` for their pull request to allow the plugin to work with transforms.
