@@ -500,4 +500,16 @@ describe('http mock', function(){
 			});
 		});
 	});
+
+	describe('external url', function(){
+		it('should match against external URLs', function(done){
+			http({
+				method: 'GET',
+				url: 'https://test-api.com/user'
+			}).then(function(response){
+				expect(response.data).toBe('pass');
+				done();
+			});
+		});
+	});
 });

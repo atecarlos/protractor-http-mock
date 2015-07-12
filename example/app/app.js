@@ -29,7 +29,7 @@ angular
 				return $http({
 					method: 'GET',
 					url: '/users?name=' + encodeURIComponent(name) + '&city=' + encodeURIComponent(city)
-				})
+				});
 			},
 			getAuthenticated: function(auth){
 				return $http({
@@ -38,7 +38,17 @@ angular
 					headers: {
 						auth: auth
 					}
-				})
+				});
+			},
+			getFromExternalBy: function(name, city){
+				return $http({
+					method: 'GET',
+					url: 'http://some-other.com/users',
+					params: {
+						name: name,
+						city: city
+					}
+				});
 			}
 		};
 	})
@@ -155,6 +165,12 @@ angular
 
 		self.searchByQuery = function(){
 			userService.getByQuery(self.query, self.queryCity)
+				.then(searchHandler)
+				.catch(catchHandler);
+		};
+
+		self.searchExternal = function(){
+			userService.getFromExternalBy(self.query, self.queryCity)
 				.then(searchHandler)
 				.catch(catchHandler);
 		};

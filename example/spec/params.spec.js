@@ -1,7 +1,7 @@
 var mock = require('../../index'),
 	get = require('./get');
 
-describe('get query strings', function(){
+describe('get by params', function(){
 	beforeEach(function(){
 		mock([
 			{
