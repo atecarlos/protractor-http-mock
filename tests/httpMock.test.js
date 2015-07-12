@@ -17,6 +17,19 @@ describe('http mock', function(){
 				request: {
 					method: 'GET',
 					path: '/user',
+					headers: {
+						'x-auth': 'pass',
+						'gzip-pro': 'yes'
+					}
+				},
+				response: {
+					data: 'authentication passed'
+				}
+			},
+			{
+				request: {
+					method: 'GET',
+					path: '/user',
 					params: {
 						id: 1
 					}
@@ -39,6 +52,19 @@ describe('http mock', function(){
 				response: {
 					data: {
 						name: 'Carlos QS'
+					}
+				}
+			},
+			{
+				request: {
+					method: 'GET',
+					path: '/with-headers'
+				},
+				response: {
+					data: 'read my headers',
+					headers: {
+						'X-AUTH': 'authenticated',
+						'ANGULAR_API': 'ang=api'
 					}
 				}
 			},
@@ -397,6 +423,79 @@ describe('http mock', function(){
 				url: 'test-url.com/anonymous-intercept'
 			}).then(function(response){
 				expect(response.data.name).toBe('anonymous intercept test');
+				done();
+			});
+		});
+	});
+
+	describe('headers', function(){
+		it('matches a request by headers', function(done){
+			http({
+				method: 'get',
+				url: 'my-api.com/user',
+				headers: {
+					'x-auth': 'pass',
+					'gzip-pro': 'yes'
+				}
+			}).then(function(response){
+				expect(response.data).toBe('authentication passed');
+				done();
+			});
+		});
+
+		it('can respond with headers', function(done){
+			http({
+				url: 'my-api.com/with-headers',
+				method: 'get'
+			}).then(function(response){
+				expect(response.headers('X-AUTH')).toBe('authenticated');
+				expect(response.headers('ANGULAR_API')).toBe('ang=api');
+				done();
+			});
+		});
+
+		it('can respond with headers in convenience methods', function(done){
+			http({
+				url: 'my-api.com/with-headers',
+				method: 'get'
+			}).success(function(data, status, headers){
+				expect(headers('X-AUTH')).toBe('authenticated');
+				expect(headers('ANGULAR_API')).toBe('ang=api');
+				done();
+			});
+		});
+
+		it('matches request by complex headers (include functions)', function(done){
+			http({
+				method: 'get',
+				url: 'my-api.com/user',
+				headers: {
+					'x-auth': 'pass',
+					'gzip-pro': function(config){
+						if(config){
+							return 'yes';
+						}
+					}
+				}
+			}).then(function(response){
+				expect(response.data).toBe('authentication passed');
+				done();
+			});
+		});
+
+		it('ignores header properties when their function return value is null', function(done){
+			http({
+				method: 'get',
+				url: 'my-api.com/user',
+				headers: {
+					'x-auth': 'pass',
+					'gzip-pro': 'yes',
+					'ignore-me': function(){
+						return null;
+					}
+				}
+			}).then(function(response){
+				expect(response.data).toBe('authentication passed');
 				done();
 			});
 		});

@@ -37,6 +37,11 @@
 				<button id="user-search-button" ng-click="ctrl.search()">Search</button>
 				<button id="user-search-by-query-button" ng-click="ctrl.searchByQuery()">Search</button>
 			</div>
+
+			<div class="form">
+				<input id="user-select-authenticated" type="checkbox" ng-model="ctrl.authenticated" />
+				<button id="user-get-authenticated-button" ng-click="ctrl.getAuthenticated()">Get Auth</button>
+			</div>
 		</div>
 
 		<div ng-controller="GroupController as ctrl">
