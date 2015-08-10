@@ -262,6 +262,18 @@ describe('http mock', function(){
 					done();
 				});
 			});
+
+			it('treats requests as GET by default', function(done){
+				http({
+					url: '/user',
+					params: {
+						id: 2
+					}
+				}).then(function(response){
+					expect(response.data).toBe('pass');
+					done();
+				});
+			});
 		});
 
 		describe('post', function(){
