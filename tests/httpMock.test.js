@@ -176,6 +176,28 @@ describe('http mock', function(){
 			},
 			{
 				request: {
+					path: '/promise-request',
+					method: 'POST'
+				},
+				response: {
+					data: {
+						name: 'promise intercept request test'
+					}
+				}
+			},
+			{
+				request: {
+					path: '/promise-response',
+					method: 'post'
+				},
+				response: {
+					data: {
+						name: 'promise intercept response test'
+					}
+				}
+			},
+			{
+				request: {
 					path: '/transform-request',
 					method: 'post',
 					data: {
@@ -423,6 +445,7 @@ describe('http mock', function(){
 
 	describe('interceptors', function(){
 		module.config(['$provide', '$httpProvider', function($provide, $httpProvider){
+
 			$provide.factory('testInterceptor', function() {
 				return {
 					request: function(config){
@@ -434,11 +457,25 @@ describe('http mock', function(){
 					},
 
 					response: function(response){
-						if(response.config.url.match(/intercept/)){
-							response.data.interceptedResponse = true;
+						var responseReturn;
+
+						if (response.then) {
+							responseReturn = response.then(function(resolved) {
+								if(resolved.config.url.match(/intercept/)){
+									resolved.data.interceptedResponse = true;
+								}
+
+								return resolved;
+							});
+						} else {
+							if(response.config.url.match(/intercept/)){
+								response.data.interceptedResponse = true;
+							}
+
+							responseReturn = response;
 						}
 
-						return response;
+						return responseReturn;
 					}
 				}
 			});
@@ -456,6 +493,27 @@ describe('http mock', function(){
 					}
 				}
 			});
+
+			$httpProvider.interceptors.push(['$q', function($q){
+				return {
+					request: function(config){
+						if(config.url.match(/promise-request/)){
+							return $q.when(config);
+						}
+
+						return config;
+					},
+					response: function(response){
+						if(response.config.url.match(/promise-response/)){
+							response.data.interceptedPromiseResponse = true;
+
+							return $q.when(response);
+						}
+
+						return response;
+					}
+				}
+			}]);
 		}]);
 
 		it('allows intercepts through service factory functions', function(done){
@@ -475,6 +533,26 @@ describe('http mock', function(){
 				url: 'test-url.com/anonymous-intercept'
 			}).then(function(response){
 				expect(response.data.name).toBe('anonymous intercept test');
+				done();
+			});
+		});
+
+		it('allows for intercepts that return a promise from a request', function(done){
+			http({
+				method: 'POST',
+				url: 'test-url.com/promise-request'
+			}).then(function(response){
+				expect(response.data.name).toBe('promise intercept request test');
+				done();
+			});
+		});
+
+		it('allows for intercepts that return a promise from a response', function(done){
+			http({
+				method: 'POST',
+				url: 'test-url.com/promise-response'
+			}).then(function(response){
+				expect(response.data.name).toBe('promise intercept response test');
 				done();
 			});
 		});
