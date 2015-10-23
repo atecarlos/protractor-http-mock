@@ -611,6 +611,16 @@ describe('http mock', function(){
 				done();
 			});
 		});
+
+		it('always returns a header', function(done){
+			http({
+				method: 'GET',
+				url: 'test-api.com/user'
+			}).then(function(response){
+				expect(response.headers).toBeDefined();
+				done();
+			});
+		});
 	});
 
 	describe('transforms', function(){
