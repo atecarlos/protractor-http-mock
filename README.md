@@ -185,3 +185,4 @@ To run these tests locally, please follow these steps from the root directory:
 * `zigzackattack` for their contribution on post data matching.
 * `matthewjh` for their pull request to allow the plugin to play nice with interceptors.
 * `stevehenry13` for their pull request to allow the plugin to work with transforms.
+* `brandonroberts` for the fantastic work on interceptors and promises.
