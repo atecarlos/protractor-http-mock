@@ -110,7 +110,7 @@ The full GET schema for defining your mocks is as follows:
 	      param2: 'Second parameter'
 	    },
 	    headers: { //These match headers as the end result of the expression provided to the $http method.
-	    	head1: 'val1,
+	    	head1: 'val1',
 	    	head2: 'val2'
 	    }
 	  },
