@@ -43,6 +43,17 @@ describe('http mock', function(){
 			{
 				request: {
 					method: 'GET',
+					path: '/user/search'
+				},
+				response: {
+					data: {
+						name: 'Whatever you search'
+					}
+				}
+			},
+			{
+				request: {
+					method: 'GET',
 					path: '/user/search',
 					queryString: {
 						id: '1',
@@ -413,10 +424,19 @@ describe('http mock', function(){
 		});
 	});
 
-	it('matches by query string', function(done){
-		http.get('github.com/user/search?id=1&city=ny%26ny').then(function(response){
-			expect(response.data.name).toBe('Carlos QS');
-			done();
+	describe('query string', function(){
+		it('matches by query string', function(done){
+			http.get('github.com/user/search?id=1&city=ny%26ny').then(function(response){
+				expect(response.data.name).toBe('Carlos QS');
+				done();
+			});
+		});
+
+		it('query string is optional in the mock config', function(done){
+			http.get('github.com/user/search?id=2&city=another').then(function(response){
+				expect(response.data.name).toBe('Whatever you search');
+				done();
+			});
 		});
 	});
 
