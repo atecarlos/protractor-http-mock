@@ -466,11 +466,11 @@ describe('http mock', function(){
 	describe('interceptors', function(){
 		module.config(['$provide', '$httpProvider', function($provide, $httpProvider){
 
-			$provide.factory('testInterceptor', function() {
+			$provide.factory('testInterceptor', function($q) {
 				return {
 					request: function(config){
-						if(config.url.match(/intercept/)){
-							config.interceptedRequest = true;
+						if(config.url.match(/promise-request/)){
+							return $q.when(config);
 						}
 
 						return config;
@@ -479,23 +479,11 @@ describe('http mock', function(){
 					response: function(response){
 						var responseReturn;
 
-						if (response.then) {
-							responseReturn = response.then(function(resolved) {
-								if(resolved.config.url.match(/intercept/)){
-									resolved.data.interceptedResponse = true;
-								}
-
-								return resolved;
-							});
-						} else {
-							if(response.config.url.match(/intercept/)){
-								response.data.interceptedResponse = true;
-							}
-
-							responseReturn = response;
+						if(response.config.url.match(/intercept/)){
+							response.data.interceptedResponse = true;
 						}
 
-						return responseReturn;
+						return response;
 					}
 				}
 			});
@@ -517,8 +505,8 @@ describe('http mock', function(){
 			$httpProvider.interceptors.push(['$q', function($q){
 				return {
 					request: function(config){
-						if(config.url.match(/promise-request/)){
-							return $q.when(config);
+						if(config.url.match(/intercept/)){
+							config.interceptedRequest = true;
 						}
 
 						return config;
@@ -553,6 +541,7 @@ describe('http mock', function(){
 				url: 'test-url.com/anonymous-intercept'
 			}).then(function(response){
 				expect(response.data.name).toBe('anonymous intercept test');
+				expect(response.data.interceptedResponse).toBeTruthy();
 				done();
 			});
 		});
@@ -573,6 +562,7 @@ describe('http mock', function(){
 				url: 'test-url.com/promise-response'
 			}).then(function(response){
 				expect(response.data.name).toBe('promise intercept response test');
+				expect(response.data.interceptedPromiseResponse).toBeTruthy();
 				done();
 			});
 		});
@@ -641,6 +631,24 @@ describe('http mock', function(){
 				done();
 			});
 		});
+
+		it('matches request by complex headers (include functions)', function(done){
+			http({
+				method: 'get',
+				url: 'my-api.com/user',
+				headers: {
+					'x-auth': 'pass',
+					'gzip-pro': function(config){
+						if(config){
+							return 'yes';
+						}
+					}
+				}
+			}).then(function(response){
+				expect(response.data).toBe('authentication passed');
+				done();
+			});
+		});
 	});
 
 	describe('transforms', function(){
@@ -657,24 +665,6 @@ describe('http mock', function(){
 				}]
 			}).then(function(response){
 				expect(response.data.name).toBe('multiple transforms request test');
-				done();
-			});
-		});
-
-		it('matches request by complex headers (include functions)', function(done){
-			http({
-				method: 'get',
-				url: 'my-api.com/user',
-				headers: {
-					'x-auth': 'pass',
-					'gzip-pro': function(config){
-						if(config){
-							return 'yes';
-						}
-					}
-				}
-			}).then(function(response){
-				expect(response.data).toBe('authentication passed');
 				done();
 			});
 		});
