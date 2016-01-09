@@ -650,6 +650,24 @@ describe('http mock', function(){
 				done();
 			});
 		});
+
+		it('response headers function returns all headers if no provided header name', function(done){
+			var expectedHeaders = {
+				'X-AUTH': 'authenticated',
+				'ANGULAR_API': 'ang=api'
+			};
+
+			http({
+				url: 'my-api.com/with-headers',
+				method: 'get'
+			}).then(function(response){
+				expect(response.headers()).toEqual(expectedHeaders);
+				expect(response.headers(null)).toEqual(expectedHeaders);
+				expect(response.headers(undefined)).toEqual(expectedHeaders);
+				done();
+			});
+		});
+
 	});
 
 	describe('transforms', function(){
