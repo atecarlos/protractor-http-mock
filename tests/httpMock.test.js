@@ -628,6 +628,7 @@ describe('http mock', function(){
 				url: 'test-api.com/user'
 			}).then(function(response){
 				expect(response.headers).toBeDefined();
+				expect(response.data).toBe('pass');
 				done();
 			});
 		});
