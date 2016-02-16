@@ -24,5 +24,8 @@
   },
   "dependencies": {
     "query-string": "^1.0.0"
+  },
+  "scripts": {
+    "test": "node_modules/.bin/grunt --gruntfile clients/arch-path/Gruntfile.js verify"
   }
 }
