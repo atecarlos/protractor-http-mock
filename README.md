@@ -164,7 +164,44 @@ For testing or debugging purposes, it is possible to extract a list of http requ
 		]);
 
 It is also possible to clear the list of requests with the `clearRequests()` method.
-		
+
+### Runtime mocks
+If there is a need to add or remove mocks during test execution, please use the `add()` and `remove()` functions:
+
+	mock.add([{
+		request: {
+			path: '/users',
+			method: 'GET',
+			params: {
+				name: 'Charlie'
+			}
+		},
+		response: {
+			data: {
+				name: 'Override'
+			}
+		}
+	}]);
+
+	...
+
+	mock.remove([{
+		request: {
+			path: '/users',
+			method: 'GET',
+			params: {
+				name: 'Charlie'
+			}
+		},
+		response: {
+			data: {
+				name: 'Override'
+			}
+		}
+	}]);
+
+These will dynamically modify your current set of mocks, and any new request that happens after that will work with the updated set of mocks. Please note that these functions only work by adding or removing mocks using inline objects. As of now, it is not possible to add or remove mocks using mock files.
+
 ### Examples
 Included in the code base is an extensive list examples on how to use all the features of this plugin. Please take a look if you have any questions.
 
