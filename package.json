@@ -4,7 +4,8 @@
   "description": "Mock HTTP calls in your protractor specs.",
   "main": "index.js",
   "scripts": {
-    "example": "grunt example"
+    "example": "grunt example",
+    "test": "node_modules/.bin/grunt verify"
   },
   "author": "Carlos Atencio",
   "license": "BSD-2-Clause",
@@ -16,7 +17,7 @@
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-jasmine-node": "~0.2.1",
     "grunt-protractor-runner": "^1.1.4",
-    "protractor": "~1.5.0"
+    "protractor": "2.5.1"
   },
   "repository": {
     "type": "git",
@@ -24,8 +25,5 @@
   },
   "dependencies": {
     "query-string": "^1.0.0"
-  },
-  "scripts": {
-    "test": "node_modules/.bin/grunt verify"
   }
 }
