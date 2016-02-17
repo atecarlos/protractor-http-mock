@@ -1,5 +1,18 @@
+sudo: false
+bundler_args: --retry 3
 language: node_js
 node_js:
-  - "0.12"
-install: npm install
-before_script: npm install -g grunt-cli && webdriver-manager update
+  - 0.12
+cache:
+  directories:
+    - node_modules/
+addons:
+  firefox: '43.0'
+install:
+  - npm set progress=false
+  - travis_retry npm install
+before_script:
+  - 'export DISPLAY=:99.0'
+  - 'sh -e /etc/init.d/xvfb start'
+script:
+  - npm run example
