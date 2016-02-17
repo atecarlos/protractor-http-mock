@@ -1,6 +1,6 @@
 var config = {
-    directConnect: true,
     baseUrl: 'http://localhost:8000/',
+    seleniumAddress: 'http://localhost:4444/wd/hub',
     specs: [
       'spec/*.spec.js'
     ],
@@ -16,9 +16,13 @@ var config = {
 };
 
 if (process.env.TRAVIS) {
-  // Run FF on Travis
+  //Run PhantomJS on Travis
   config.capabilities = {
-    browserName: 'firefox'
+    browserName: 'phantomjs',
+    'phantomjs.binary.path': require('phantomjs').path,
+    'phantomjs.ghostdriver.cli.args': ['--loglevel=DEBUG'],
+    shardTestFiles: true,
+    maxInstances: 2
   };
 } else {
   config.capabilities = {
