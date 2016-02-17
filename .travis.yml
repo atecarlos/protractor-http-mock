@@ -13,5 +13,4 @@ before_script:
   - npm install -g grunt-cli
 script:
   - node_modules/grunt-protractor-runner/node_modules/.bin/webdriver-manager update
-  - node_modules/grunt-protractor-runner/node_modules/.bin/webdriver-manager start &
   - npm test
