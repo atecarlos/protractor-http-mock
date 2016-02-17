@@ -6,7 +6,7 @@ module.exports = function(grunt) {
             options: {
                 jshintrc: '.jshintrc',
             },
-            files: ['lib/**/*.js']    
+            files: ['lib/**/*.js']
         },
         jasmine_node: {
             options: {
@@ -18,7 +18,7 @@ module.exports = function(grunt) {
         connect: {
             example: {
                 options: {
-                    base: 'example'   
+                    base: 'example'
                 }
             },
             'client-test': {
@@ -29,7 +29,7 @@ module.exports = function(grunt) {
         },
         protractor: {
             options: {
-                configFile: 'example/protractor.conf',
+                configFile: 'example/protractor-conf.js',
                 //debug: true
             },
             example: {}
