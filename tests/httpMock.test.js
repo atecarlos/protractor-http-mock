@@ -224,6 +224,21 @@ describe('http mock', function(){
 			},
 			{
 				request: {
+					path: '/formdata',
+					method: 'post',
+					data: {
+						name: 'test',
+						city: 'test city'
+					}
+				},
+				response: {
+					data: {
+						name: 'formdata works!'
+					}
+				}
+			},
+			{
+				request: {
 					path: '/transform-request',
 					method: 'post',
 					data: {
@@ -700,6 +715,27 @@ describe('http mock', function(){
 				expect(response.data.name).toBe('transform request test');
 				done();
 			});
+		});
+
+		it('allows requests to send data as FormData', function(done){
+                        var fd = new FormData();
+                        fd.append('name', 'test');
+                        fd.append('city', 'test city');
+                        fd.representation = {
+                            name: 'test',
+                            city: 'test city'
+                        };
+                        http.post('test-url.com/formdata', {}, {
+                            transformRequest: function(data) {                                
+                                return fd;
+                            },
+                            headers: {
+                                'Content-Type': undefined
+                            }
+                        }).then(function(response){
+                            expect(response.data.name).toBe('formdata works!');
+                            done();
+                        });
 		});
 
 		it('allows multiple transform responses', function(done){
