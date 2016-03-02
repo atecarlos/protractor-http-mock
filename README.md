@@ -212,16 +212,3 @@ To run these tests locally, please follow these steps from the root directory:
 1. `npm install`
 2. `node_modules/.bin/webdriver-manager update`
 3. `npm run example`
-
-
-### Contributions and recognition
-
-* `jdgblinq` for their contribution to query string matching.
-* `ReactiveRaven` for adding convenience methods key for getting this to work with ngResource.
-* `nielssj` for the `requestsMade` functionality and for pointing out a few bugs.
-* `nadersoliman` for their input and pull request on allowing the user to set custom name for the protractor configuration file.
-* `kharnt0x` for submitting a bug fix for proper callback handling.
-* `zigzackattack` for their contribution on post data matching.
-* `matthewjh` for their pull request to allow the plugin to play nice with interceptors.
-* `stevehenry13` for their pull request to allow the plugin to work with transforms.
-* `brandonroberts` for the fantastic work on interceptors and promises.
