@@ -1,5 +1,16 @@
+sudo: false
+bundler_args: --retry 3
 language: node_js
 node_js:
-  - "0.12"
-install: npm install
-before_script: npm install -g grunt-cli && webdriver-manager update
+  - 0.12
+cache:
+  directories:
+    - node_modules/
+install:
+  - npm set progress=false
+  - travis_retry npm install
+before_script:
+  - npm install -g grunt-cli
+script:
+  - node_modules/grunt-protractor-runner/node_modules/.bin/webdriver-manager update
+  - npm test
