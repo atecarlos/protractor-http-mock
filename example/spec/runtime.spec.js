@@ -1,88 +1,88 @@
 var mock = require('../../index'), //substitute for require('protractor-http-mock')
-	get = require('./get'); 
+    get = require('./get');
 
 describe('inline', function(){
-	
-	beforeEach(function(){
-		mock([
-			{
-				request: {
-					path: '/users',
-					method: 'GET'
-				},
-				response: {
-					data: [
-						{
-							firstName: 'default',
-							lastName: 'value'
-						}
-					]
-				}
-			},
-			{
-				request: {
-					path: '/users',
-					method: 'GET',
-					params: {
-						name: 'Charlie'
-					}
-				},
-				response: {
-					data: {
-						name: 'Setup'
-					}
-				}
-			}
-		]);
 
-		get();
+    beforeEach(function(){
+        mock([
+            {
+                request: {
+                    path: '/users',
+                    method: 'GET'
+                },
+                response: {
+                    data: [
+                        {
+                            firstName: 'default',
+                            lastName: 'value'
+                        }
+                    ]
+                }
+            },
+            {
+                request: {
+                    path: '/users',
+                    method: 'GET',
+                    params: {
+                        name: 'Charlie'
+                    }
+                },
+                response: {
+                    data: {
+                        name: 'Setup'
+                    }
+                }
+            }
+        ]);
 
-		mock.add([{
-			request: {
-				path: '/users',
-				method: 'GET',
-				params: {
-					name: 'Charlie'
-				}
-			},
-			response: {
-				data: {
-					name: 'Override'
-				}
-			}
-		}]);
-	});
+        get();
 
-	afterEach(function(){
-		mock.teardown();
-	});
+        mock.add([{
+            request: {
+                path: '/users',
+                method: 'GET',
+                params: {
+                    name: 'Charlie'
+                }
+            },
+            response: {
+                data: {
+                    name: 'Override'
+                }
+            }
+        }]);
+    });
 
-	it('can add mocks', function(){
-		element(by.id('user-query')).clear().sendKeys('Charlie');
-		element(by.id('user-search-button')).click();
+    afterEach(function(){
+        mock.teardown();
+    });
 
-		expect(element(by.id('user-data')).getText()).toContain('Override');
-	});
+    it('can add mocks', function(){
+        element(by.id('user-query')).clear().sendKeys('Charlie');
+        element(by.id('user-search-button')).click();
 
-	it('can remove mocks', function(){
-		mock.remove([{
-			request: {
-				path: '/users',
-				method: 'GET',
-				params: {
-					name: 'Charlie'
-				}
-			},
-			response: {
-				data: {
-					name: 'Override'
-				}
-			}
-		}]);
+        expect(element(by.id('user-data')).getText()).toContain('Override');
+    });
 
-		element(by.id('user-query')).clear().sendKeys('Charlie');
-		element(by.id('user-search-button')).click();
+    it('can remove mocks', function(){
+        mock.remove([{
+            request: {
+                path: '/users',
+                method: 'GET',
+                params: {
+                    name: 'Charlie'
+                }
+            },
+            response: {
+                data: {
+                    name: 'Override'
+                }
+            }
+        }]);
 
-		expect(element(by.id('user-data')).getText()).toContain('Setup');
-	});
+        element(by.id('user-query')).clear().sendKeys('Charlie');
+        element(by.id('user-search-button')).click();
+
+        expect(element(by.id('user-data')).getText()).toContain('Setup');
+    });
 });
