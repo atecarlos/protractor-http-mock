@@ -1,77 +1,77 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Protractor Http Mock - Example</title>
-	</head>
-	<body ng-app="example">
-		<div ng-controller="DefaultController as ctrl">
-			<span id="default-name">{{ ctrl.name }}</span>
-		</div>
+    <head>
+        <title>Protractor Http Mock - Example</title>
+    </head>
+    <body ng-app="example">
+        <div ng-controller="DefaultController as ctrl">
+            <span id="default-name">{{ ctrl.name }}</span>
+        </div>
 
-		<div ng-controller="UserController as ctrl">
-			<ul ng-repeat="user in ctrl.users ">
-				<li>
-					<span>{{ user.firstName }}</span>
-					<span>|</span>
-					<span>{{ user.lastName }}</span>
-				</li>
-			</ul>
+        <div ng-controller="UserController as ctrl">
+            <ul ng-repeat="user in ctrl.users ">
+                <li>
+                    <span>{{ user.firstName }}</span>
+                    <span>|</span>
+                    <span>{{ user.lastName }}</span>
+                </li>
+            </ul>
 
-			<p id="errorMsg" ng-show="ctrl.showError">{{ ctrl.error }}</p>
-			<p id="successMsg" ng-show="ctrl.success">{{ ctrl.success }}</p>
+            <p id="errorMsg" ng-show="ctrl.showError">{{ ctrl.error }}</p>
+            <p id="successMsg" ng-show="ctrl.success">{{ ctrl.success }}</p>
 
-			<div class="form">
-				<input ng-model="ctrl.newUser" />
-				<button id="save" ng-click="ctrl.save()">Save</button>
-				<button id="save-name" ng-click="ctrl.saveName()">Save Name</button>
-				<button id="add-default" ng-click="ctrl.addDefaultUsers()">Add Default</button>
-			</div>
+            <div class="form">
+                <input ng-model="ctrl.newUser" />
+                <button id="save" ng-click="ctrl.save()">Save</button>
+                <button id="save-name" ng-click="ctrl.saveName()">Save Name</button>
+                <button id="add-default" ng-click="ctrl.addDefaultUsers()">Add Default</button>
+            </div>
 
-			<pre id="user-data">
-				{{ ctrl.foundUser }}
-			</pre>
+            <pre id="user-data">
+                {{ ctrl.foundUser }}
+            </pre>
 
-			<div class="form">
-				<input id="user-query" ng-model="ctrl.query" />
-				<input id="user-query-city" ng-model="ctrl.queryCity" />
-				<button id="user-search-button" ng-click="ctrl.search()">Search</button>
-				<button id="user-search-by-query-button" ng-click="ctrl.searchByQuery()">Search</button>
-				<button id="user-search-external-by-query-button" ng-click="ctrl.searchExternal()">Search</button>
-			</div>
+            <div class="form">
+                <input id="user-query" ng-model="ctrl.query" />
+                <input id="user-query-city" ng-model="ctrl.queryCity" />
+                <button id="user-search-button" ng-click="ctrl.search()">Search</button>
+                <button id="user-search-by-query-button" ng-click="ctrl.searchByQuery()">Search</button>
+                <button id="user-search-external-by-query-button" ng-click="ctrl.searchExternal()">Search</button>
+            </div>
 
-			<div class="form">
-				<input id="user-select-authenticated" type="checkbox" ng-model="ctrl.authenticated" />
-				<button id="user-get-authenticated-button" ng-click="ctrl.getAuthenticated()">Get Auth</button>
-			</div>
-		</div>
+            <div class="form">
+                <input id="user-select-authenticated" type="checkbox" ng-model="ctrl.authenticated" />
+                <button id="user-get-authenticated-button" ng-click="ctrl.getAuthenticated()">Get Auth</button>
+            </div>
+        </div>
 
-		<div ng-controller="GroupController as ctrl">
-			<ul ng-repeat="group in ctrl.groups">
-				<li>{{ group.name }}</li>
-			</ul>
-		</div>
+        <div ng-controller="GroupController as ctrl">
+            <ul ng-repeat="group in ctrl.groups">
+                <li>{{ group.name }}</li>
+            </ul>
+        </div>
 
-		<div ng-controller="ConvenienceController as ctrl">
-			<input ng-model="ctrl.input" />
-			<input ng-model="ctrl.id" />
+        <div ng-controller="ConvenienceController as ctrl">
+            <input ng-model="ctrl.input" />
+            <input ng-model="ctrl.id" />
 
-			<button id="conv-head" ng-click="ctrl.getMeta()">Head</button>
-			<button id="conv-save" ng-click="ctrl.save()">Save</button>
-			<button id="conv-update" ng-click="ctrl.update()">Update</button>
-			<button id="conv-patch" ng-click="ctrl.patch()">Patch</button>
-			<button id="conv-jsonp" ng-click="ctrl.jsonp()">JSONP</button>
-			<button id="conv-delete" ng-click="ctrl.delete()">Delete</button>
+            <button id="conv-head" ng-click="ctrl.getMeta()">Head</button>
+            <button id="conv-save" ng-click="ctrl.save()">Save</button>
+            <button id="conv-update" ng-click="ctrl.update()">Update</button>
+            <button id="conv-patch" ng-click="ctrl.patch()">Patch</button>
+            <button id="conv-jsonp" ng-click="ctrl.jsonp()">JSONP</button>
+            <button id="conv-delete" ng-click="ctrl.delete()">Delete</button>
 
-			<span id="conv-data">{{ ctrl.data }}</span>
-			<span id="conv-status">{{ ctrl.status }}</span>
-			<span id="conv-error" ng-show="ctrl.showError">My convenience error</span>
-		</div>
+            <span id="conv-data">{{ ctrl.data }}</span>
+            <span id="conv-status">{{ ctrl.status }}</span>
+            <span id="conv-error" ng-show="ctrl.showError">My convenience error</span>
+        </div>
 
-		<div ng-controller="HttpDefaultsController as ctrl">
-			<pre id="http-defaults" ng-show="ctrl.hasHttpDefaults">$http defaults are set</pre>
-		</div>
+        <div ng-controller="HttpDefaultsController as ctrl">
+            <pre id="http-defaults" ng-show="ctrl.hasHttpDefaults">$http defaults are set</pre>
+        </div>
 
-		<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
-		<script src="app/app.js"></script>
-	</body>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
+        <script src="app/app.js"></script>
+    </body>
 </html>

@@ -1,187 +1,187 @@
 var mock = require('../../index'), //substitute for require('protractor-http-mock')
-	get = require('./get'); 
+    get = require('./get');
 
 describe('inline', function(){
-	
-	afterEach(function(){
-		mock.teardown();
-	});
 
-	describe('success', function(){
-		it('can set a single mock inline', function(){
-			mock([{
-				request: {
-					path: '/users',
-					method: 'GET'
-				},
-				response: {
-					data: [
-						{
-							firstName: 'carlos',
-							lastName: 'npm'
-						},
-						{
-							firstName: 'angular',
-							lastName: 'js'
-						}
-					]
-				}
-			}]);
+    afterEach(function(){
+        mock.teardown();
+    });
 
-			get();
-			expect(browser.getTitle()).toBe('Protractor Http Mock - Example');
-			
-			element.all(by.repeater('user in ctrl.users')).then(function(users){
-				expect(users.length).toBe(2);
-				expect(users[0].getText()).toBe('carlos | npm');
-				expect(users[1].getText()).toBe('angular | js');	
-			});
+    describe('success', function(){
+        it('can set a single mock inline', function(){
+            mock([{
+                request: {
+                    path: '/users',
+                    method: 'GET'
+                },
+                response: {
+                    data: [
+                        {
+                            firstName: 'carlos',
+                            lastName: 'npm'
+                        },
+                        {
+                            firstName: 'angular',
+                            lastName: 'js'
+                        }
+                    ]
+                }
+            }]);
 
-			expect(element(by.binding('ctrl.error')).isDisplayed()).toBe(false);
-		});
+            get();
+            expect(browser.getTitle()).toBe('Protractor Http Mock - Example');
 
-		it('can set multiple mocks inline', function(){
-			mock([
-				{
-					request: {
-						path: '/users',
-						method: 'GET'
-					},
-					response: {
-						data: [
-							{
-								firstName: 'multiple',
-								lastName: 'mocks'
-							}
-						]
-					}
-				},
-				{
-					request: {
-						path: '/groups',
-						method: 'GET'
-					},
-					response: {
-						data: [
-							{ name: 'first' },
-							{ name: 'second' }
-						]
-					}
-				},
-				{
-					request: {
-						path: 'users/new',
-						method: 'POST',
-						data: {
-							name: 'my-new-user'
-						}
-					},
-					response: {
-						status: 200
-					}
-				}
-			]);
+            element.all(by.repeater('user in ctrl.users')).then(function(users){
+                expect(users.length).toBe(2);
+                expect(users[0].getText()).toBe('carlos | npm');
+                expect(users[1].getText()).toBe('angular | js');
+            });
 
-			get();
+            expect(element(by.binding('ctrl.error')).isDisplayed()).toBe(false);
+        });
 
-			element.all(by.repeater('user in ctrl.users')).then(function(users){
-				expect(users.length).toBe(1);
-				expect(users[0].getText()).toBe('multiple | mocks');
-			});
+        it('can set multiple mocks inline', function(){
+            mock([
+                {
+                    request: {
+                        path: '/users',
+                        method: 'GET'
+                    },
+                    response: {
+                        data: [
+                            {
+                                firstName: 'multiple',
+                                lastName: 'mocks'
+                            }
+                        ]
+                    }
+                },
+                {
+                    request: {
+                        path: '/groups',
+                        method: 'GET'
+                    },
+                    response: {
+                        data: [
+                            { name: 'first' },
+                            { name: 'second' }
+                        ]
+                    }
+                },
+                {
+                    request: {
+                        path: 'users/new',
+                        method: 'POST',
+                        data: {
+                            name: 'my-new-user'
+                        }
+                    },
+                    response: {
+                        status: 200
+                    }
+                }
+            ]);
 
-			element.all(by.repeater('group in ctrl.groups')).then(function(groups){
-				expect(groups.length).toBe(2);
-				expect(groups[0].getText()).toBe('first');
-				expect(groups[1].getText()).toBe('second');
-			});
+            get();
 
-			expect(element(by.binding('ctrl.error')).isDisplayed()).toBe(false);
+            element.all(by.repeater('user in ctrl.users')).then(function(users){
+                expect(users.length).toBe(1);
+                expect(users[0].getText()).toBe('multiple | mocks');
+            });
 
-			element(by.model('ctrl.newUser')).sendKeys('my-new-user');
-			element(by.css('.form #save')).click();
+            element.all(by.repeater('group in ctrl.groups')).then(function(groups){
+                expect(groups.length).toBe(2);
+                expect(groups[0].getText()).toBe('first');
+                expect(groups[1].getText()).toBe('second');
+            });
 
-			var succElement = element(by.binding('ctrl.success'));
-			expect(succElement.isDisplayed()).toBe(true);
-			expect(succElement.getText()).toBe('new user saved: my-new-user');
-		});
-	});
+            expect(element(by.binding('ctrl.error')).isDisplayed()).toBe(false);
 
-	describe('error', function(){
-		it('can set a single mock inline', function(){
-			mock([{
-				request: {
-					path: '/users',
-					method: 'GET'
-				},
-				response: {
-					status: 500,
-					data: {
-						error: 'oh no!'
-					}
-				}
-			}]);
+            element(by.model('ctrl.newUser')).sendKeys('my-new-user');
+            element(by.css('.form #save')).click();
 
-			get();
-			var users = element.all(by.repeater('user in ctrl.users'));
-			expect(users.count()).toBe(0);
-			var errElement = element(by.binding('ctrl.error'));
-			expect(errElement.isDisplayed()).toBe(true);
-			expect(errElement.getText()).toBe('oh no!');
-		});
+            var succElement = element(by.binding('ctrl.success'));
+            expect(succElement.isDisplayed()).toBe(true);
+            expect(succElement.getText()).toBe('new user saved: my-new-user');
+        });
+    });
 
-		it('can set multiple mocks inline', function(){
-			mock([
-				{
-					request: {
-						path: '/users',
-						method: 'GET'
-					},
-					response: {
-						status: 500,
-						data: {
-							error: 'help!'
-						}
-					}
-				},
-				{
-					request: {
-						path: '/groups',
-						method: 'GET'
-					},
-					response: {
-						status: 200,
-						data: [ { name: 'i did work' }]
-					}
-				},
-				{
-					request: {
-						path: '/users/new',
-						method: 'POST',
-						data: {}
-					},
-					response: {
-						status: 500,
-						data: {
-							error: 'post error!'
-						}
-					}
-				}
-			]);
+    describe('error', function(){
+        it('can set a single mock inline', function(){
+            mock([{
+                request: {
+                    path: '/users',
+                    method: 'GET'
+                },
+                response: {
+                    status: 500,
+                    data: {
+                        error: 'oh no!'
+                    }
+                }
+            }]);
 
-			get();
+            get();
+            var users = element.all(by.repeater('user in ctrl.users'));
+            expect(users.count()).toBe(0);
+            var errElement = element(by.binding('ctrl.error'));
+            expect(errElement.isDisplayed()).toBe(true);
+            expect(errElement.getText()).toBe('oh no!');
+        });
 
-			var users = element.all(by.repeater('user in ctrl.users'));
-			expect(users.count()).toBe(0);
+        it('can set multiple mocks inline', function(){
+            mock([
+                {
+                    request: {
+                        path: '/users',
+                        method: 'GET'
+                    },
+                    response: {
+                        status: 500,
+                        data: {
+                            error: 'help!'
+                        }
+                    }
+                },
+                {
+                    request: {
+                        path: '/groups',
+                        method: 'GET'
+                    },
+                    response: {
+                        status: 200,
+                        data: [ { name: 'i did work' }]
+                    }
+                },
+                {
+                    request: {
+                        path: '/users/new',
+                        method: 'POST',
+                        data: {}
+                    },
+                    response: {
+                        status: 500,
+                        data: {
+                            error: 'post error!'
+                        }
+                    }
+                }
+            ]);
 
-			var groups = element.all(by.repeater('group in ctrl.groups'));
-			expect(groups.count()).toBe(1);
+            get();
 
-			var errElement = element(by.binding('ctrl.error'));
-			expect(errElement.isDisplayed()).toBe(true);
-			expect(errElement.getText()).toBe('help!');
+            var users = element.all(by.repeater('user in ctrl.users'));
+            expect(users.count()).toBe(0);
 
-			element(by.css('.form #save')).click();
-			expect(errElement.getText()).toBe('post error!');
-		});
-	});
+            var groups = element.all(by.repeater('group in ctrl.groups'));
+            expect(groups.count()).toBe(1);
+
+            var errElement = element(by.binding('ctrl.error'));
+            expect(errElement.isDisplayed()).toBe(true);
+            expect(errElement.getText()).toBe('help!');
+
+            element(by.css('.form #save')).click();
+            expect(errElement.getText()).toBe('post error!');
+        });
+    });
 });
