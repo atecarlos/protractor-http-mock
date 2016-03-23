@@ -149,10 +149,11 @@ Defining `params`, `queryString`, `headers`, or `data` will help the plugin matc
 
 Headers must be defined as the headers that will be used in the http call. Therefore, if in the code to be tested, the headers are defined using properties with function values, these functions will be evaluated as per the $http specification and matched by end result.
 
-Protractor mock will respond with the **last** matched request in case there are several matches.
-
 #### Response
 The default `status` value is 200 if none is specified.
+
+### Precendence
+protractor-http-mock will respond with the **last** matched request in case there are several matches. The plugin will start matching the default mocks first, followed by those added within the test itself in the order they are added. In other words, the last mock defined will always win.
 
 ### Inspection
 For testing or debugging purposes, it is possible to extract a list of http requests. Simply call the `requestsMade` function as follows:
