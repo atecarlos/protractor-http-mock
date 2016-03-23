@@ -210,5 +210,5 @@ Included in the code base is an extensive list examples on how to use all the fe
 To run these tests locally, please follow these steps from the root directory:
 
 1. `npm install`
-2. `npm webdriver-update`
+2. `npm run webdriver-update`
 3. `npm run example`

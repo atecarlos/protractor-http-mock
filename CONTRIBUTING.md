@@ -7,7 +7,7 @@ I strongly encourage developers to submit pull requests for new features and bug
 This project is developed using grunt. To run all tests, simply execute
 
 `npm install`
-`node_modules/.bin/webdriver-manager update`
+`npm run webdriver-update`
 `grunt verify`
 
 * To add a unit test, please refer to tests/httpMock.test.js
