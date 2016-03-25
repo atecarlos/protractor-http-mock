@@ -11,7 +11,7 @@
 </head>
 <body ng-app="httpMock">
 <% with (scripts) { %>
-  <% [].concat(polyfills, jasmine, boot, vendor, helpers, src, specs,reporters).forEach(function(script){ %>
+  <% [].concat(polyfills, jasmine, boot, vendor, src, helpers, specs,reporters).forEach(function(script){ %>
   <script src="<%= script %>"></script>
   <% }) %>
 <% }; %>
