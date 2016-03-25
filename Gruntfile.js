@@ -50,7 +50,7 @@ module.exports = function(grunt) {
             test: {
                 src: 'tests/bundle/httpMock.js',
                 options: {
-                    specs: 'tests/*test.js',
+                    specs: 'tests/plugin.test.js',
                     vendor: [
                         'http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.js'
                     ],
