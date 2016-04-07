@@ -205,6 +205,38 @@ If there is a need to add or remove mocks during test execution, please use the 
 
 These will dynamically modify your current set of mocks, and any new request that happens after that will work with the updated set of mocks. Please note that these functions only work by adding or removing mocks using inline objects. As of now, it is not possible to add or remove mocks using mock files.
 
+### Plugins
+
+Plugins can be used to extend the matching functionality of protractor-http-mock. These are separate from protractor plugins.
+
+A plugin can be defined as either an NPM package or a function. 
+
+They can be declared in your protractor configuration to be consumed by all your tests:
+
+	baseUrl: 'http://localhost:8000/',
+    specs: [
+      'spec/*.spec.js'
+    ],
+    httpMockPlugins: {
+      default: ['protractor-http-mock-sample-plugin']
+    }
+
+or in each individual test:
+	
+	mock([
+		//mocks go here
+	], [
+		{
+			match: function(mockRequest, requestConfig){
+				...
+			}
+		}
+	]);
+
+Note that in both your protractor configuration and tests, a plugin can be declared as either an npm package name, or definining the object inline.
+
+See this [sample plugin](https://github.com/atecarlos/protractor-http-mock-sample-plugin) for more information.
+
 ### Examples
 Included in the code base is an extensive list examples on how to use all the features of this plugin. Please take a look if you have any questions.
 
