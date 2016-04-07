@@ -7,6 +7,9 @@ var config = {
       dir: 'mocks',
       default: ['default']
     },
+    httpMockPlugins: {
+      default: ['protractor-http-mock-sample-plugin']
+    },
     onPrepare: function(){
       require('../index').config = {
         rootDirectory: __dirname

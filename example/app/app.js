@@ -49,6 +49,11 @@ angular
 						city: city
 					}
 				});
+			},
+			getThroughPlugin: function(){
+				return $http.get('/users', {
+					plugin: {}
+				});
 			}
 		};
 	})
@@ -258,4 +263,14 @@ angular
 	})
 	.controller('HttpDefaultsController', function($http){
 		this.hasHttpDefaults = !!$http.defaults;
+	})
+	.controller('PluginsController', function(userService){
+		var self = this;
+
+		self.get = function(){
+			return userService.getThroughPlugin().then(function(response){
+				console.log('HERE', response);
+				self.result = response.data;
+			});
+		}
 	});

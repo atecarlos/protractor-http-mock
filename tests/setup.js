@@ -247,7 +247,7 @@
 			request: {
 				path: '/plugin',
 				method: 'get',
-				form: {
+				plugin: {
 					check: true
 				}
 			},
@@ -259,11 +259,11 @@
 
 	var plugins = [
 		{
-			match: function(expectationRequest, config){
+			match: function(mockRequest, requestConfig){
 				var match = true;
 
-				if(config.url.indexOf('plugin') > 0 && expectationRequest.path == '/plugin'){
-					return expectationRequest.form.check;
+				if(requestConfig.plugin  && mockRequest.plugin){
+					return mockRequest.plugin.check;
 				}
 
 				return match;

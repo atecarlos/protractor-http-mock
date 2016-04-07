@@ -8,7 +8,8 @@ describe('plugins', function(){
 	it('plugins can match', function(done){
 		http({
 			method: 'GET',
-			url: '/plugin'
+			url: '/plugin',
+			plugin: {}
 		}).success(function(data, status){
 			expect(data).toBe('plugin match works!');
 			expect(status).toBe(200);

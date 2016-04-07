@@ -71,6 +71,11 @@
 			<pre id="http-defaults" ng-show="ctrl.hasHttpDefaults">$http defaults are set</pre>
 		</div>
 
+		<div ng-controller="PluginsController as ctrl">
+			<button id="plugin-request" ng-click="ctrl.get()">Plugin</button>
+			<span id="plugin-result">{{ ctrl.result }}</span>
+		</div>
+
 		<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
 		<script src="app/app.js"></script>
 	</body>
