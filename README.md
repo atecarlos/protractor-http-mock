@@ -237,6 +237,13 @@ Note that in both your protractor configuration and tests, a plugin can be decla
 
 See this [sample plugin](https://github.com/atecarlos/protractor-http-mock-sample-plugin) for more information.
 
+### Defaults
+
+If necessary, default mocks and plugins can be skipped for a particular test simply by passing true at the end of your `mock` call:
+	
+	mock(mocks, plugins, true);
+
+
 ### Examples
 Included in the code base is an extensive list examples on how to use all the features of this plugin. Please take a look if you have any questions.
 
