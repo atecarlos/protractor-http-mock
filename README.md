@@ -119,6 +119,7 @@ The full GET schema for defining your mocks is as follows:
 	  response: {
 	  	data: {}, // This is the return value for the matched request
 	    status: 500 // The HTTP status code for the mocked response. This is an optional field.
+	    delay: 2 // number of milliseconds to delay sending back the response.
 	  }
 
 A full mock for a POST call takes the following options:
@@ -150,7 +151,9 @@ Defining `params`, `queryString`, `headers`, or `data` will help the plugin matc
 Headers must be defined as the headers that will be used in the http call. Therefore, if in the code to be tested, the headers are defined using properties with function values, these functions will be evaluated as per the $http specification and matched by end result.
 
 #### Response
-The default `status` value is 200 if none is specified.
+The default `status` value is 200 if none is specified. 
+
+An optional `delay` value can be set on the response to assert any state that occurs when waiting for the response in your application, i.e. loading messages or spinners. Please note that UI tests with timing expectations can be somewhat unstable and provide inconsistent results. Please use this feature carefully.
 
 ### Precendence
 protractor-http-mock will respond with the **last** matched request in case there are several matches. The plugin will start matching the default mocks first, followed by those added within the test itself in the order they are added. In other words, the last mock defined will always win.
