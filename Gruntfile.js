@@ -73,6 +73,7 @@ module.exports = function(grunt) {
     grunt.registerTask('host-example', ['connect:example:keepalive']);
     grunt.registerTask('example', ['connect:example', 'protractor:example']);
     grunt.registerTask('test', ['jasmine_node']);
+    grunt.registerTask('lint', ['jshint']);
     grunt.registerTask('client-test', ['browserify:test', 'jasmine:test']);
 
     grunt.registerTask('verify', ['test', 'client-test', 'example']);

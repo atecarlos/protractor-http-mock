@@ -1,5 +1,5 @@
 # Protractor Mock
-A NodeJS module to be used alongside [Protractor](https://github.com/angular/protractor) to facilitate setting up mocks for HTTP calls for the AngularJS applications under test. 
+A NodeJS module to be used alongside [Protractor](https://github.com/angular/protractor) to facilitate setting up mocks for HTTP calls for the AngularJS applications under test.
 
 This allows the developer to isolate the UI and client-side application code in our tests without any dependencies on an API.
 
@@ -69,11 +69,11 @@ Make sure to clean up after test execution. This should be typically done in the
 	afterEach(function(){
 	  mock.teardown();
 	});
-	
+
 Please note that the `mock()` function needs to be called before the browser opens. If you have different mock data for different tests, please make sure that, either the tests always start in a new browser window, or that its possible to setup all the mocks for each test case before any of tests start running.
 
 ### Mock files
-Mocks can also be loaded from physical files located in the `mocks.dir` directory that we defined in our configuration: 
+Mocks can also be loaded from physical files located in the `mocks.dir` directory that we defined in our configuration:
 
   	tests
 	    e2e
@@ -103,6 +103,7 @@ The full GET schema for defining your mocks is as follows:
 	  request: {
 	    path: '/products/1/items',
 	    method: 'GET',
+			regex: false, // Boolean to enable Regular Expression matching on path. This is an optional field.
 	    params: { // These match params as they would be passed to the $http service. This is an optional field.
 	      page: 2,
 	      status: 'onsale'
@@ -127,6 +128,7 @@ A full mock for a POST call takes the following options:
 	  request: {
 	    path: '/products/1/items',
 	    method: 'POST',
+			regex: false, // Boolean to enable Regular Expression matching on path. This is an optional field.
 	    data: { // These match POST data. This is an optional field.
 	      status: 'onsale',
 	      title: 'Blue Jeans',
@@ -151,7 +153,7 @@ Defining `params`, `queryString`, `headers`, or `data` will help the plugin matc
 Headers must be defined as the headers that will be used in the http call. Therefore, if in the code to be tested, the headers are defined using properties with function values, these functions will be evaluated as per the $http specification and matched by end result.
 
 #### Response
-The default `status` value is 200 if none is specified. 
+The default `status` value is 200 if none is specified.
 
 An optional `delay` value can be set on the response to assert any state that occurs when waiting for the response in your application, i.e. loading messages or spinners. Please note that UI tests with timing expectations can be somewhat unstable and provide inconsistent results. Please use this feature carefully.
 
@@ -212,7 +214,7 @@ These will dynamically modify your current set of mocks, and any new request tha
 
 Plugins can be used to extend the matching functionality of protractor-http-mock. These are separate from protractor plugins.
 
-A plugin can be defined as either an NPM package or a function. 
+A plugin can be defined as either an NPM package or a function.
 
 They can be declared in your protractor configuration to be consumed by all your tests:
 
@@ -225,7 +227,7 @@ They can be declared in your protractor configuration to be consumed by all your
     }
 
 or in each individual test:
-	
+
 	mock([
 		//mocks go here
 	], [
@@ -243,7 +245,7 @@ See this [sample plugin](https://github.com/atecarlos/protractor-http-mock-sampl
 ### Defaults
 
 If necessary, default mocks and plugins can be skipped for a particular test simply by passing true at the end of your `mock` call:
-	
+
 	mock(mocks, plugins, true);
 
 

@@ -16,13 +16,20 @@ angular
 				return $http({ method: 'POST', url: '/users/new', data: data });
 			},
 			getBy: function(name, city){
-				return $http({ 
-					method: 'GET', 
+				return $http({
+					method: 'GET',
 					url: '/users',
 					params: {
 						name: name,
 						city: city
 					}
+				});
+			},
+			getById: function(id){
+				console.log(id);
+				return $http({
+					method: 'GET',
+					url: '/users/' + id
 				});
 			},
 			getByQuery: function(name, city){
@@ -164,6 +171,12 @@ angular
 
 		self.search = function(){
 			userService.getBy(self.query, self.queryCity || undefined)
+				.then(searchHandler)
+				.catch(catchHandler);
+		};
+
+		self.searchById = function() {
+			userService.getById(self.query)
 				.then(searchHandler)
 				.catch(catchHandler);
 		};

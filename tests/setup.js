@@ -254,6 +254,26 @@
 			response: {
 				data: 'plugin match works!'
 			}
+		},
+		{
+			request: {
+				path: 'regex\\/.*',
+				regex: true,
+				method: 'get',
+			},
+			response: {
+				data: 'regex any match'
+			}
+		},
+		{
+			request: {
+				path: '\\/regex\\/[0-9]',
+				regex: true,
+				method: 'get',
+			},
+			response: {
+				data: 'regex number match'
+			}
 		}
 	];
 
