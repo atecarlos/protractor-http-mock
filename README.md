@@ -173,6 +173,12 @@ For testing or debugging purposes, it is possible to extract a list of http requ
 
 It is also possible to clear the list of requests with the `clearRequests()` method.
 
+If you wish to only assert a single request made as opposed to the full list of requests, then you can do the following:
+
+	mock.requestsMade().then(function(requests){
+		expect(requests[1]).toEqual({ url : '/users', method : 'GET' })
+	});
+
 ### Runtime mocks
 If there is a need to add or remove mocks during test execution, please use the `add()` and `remove()` functions:
 

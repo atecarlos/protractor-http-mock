@@ -60,6 +60,12 @@ describe('requests made', function(){
 		]);
 	});
 
+	it('can evaluate just the last request made', function(){
+		mock.requestsMade().then(function(requests){
+			expect(requests[1]).toEqual({ url : '/users', method : 'GET' })
+		});
+	});
+
 	it('can clear requests', function(){
 		mock.clearRequests();
 		expect(mock.requestsMade()).toEqual([]);
