@@ -8,12 +8,10 @@ module.exports = function(grunt) {
             },
             files: ['lib/**/*.js']
         },
-        jasmine_node: {
-            options: {
-                forceExit: true,
-                specNameMatcher: '.specs',
-            },
-            all: ['specs/']
+        jasmine_nodejs: {
+            all: {
+                specs: ['specs/*.js']
+            }
         },
         connect: {
             example: {
@@ -64,7 +62,7 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-jasmine-node');
+    grunt.loadNpmTasks('grunt-jasmine-nodejs');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-browserify');
@@ -72,9 +70,9 @@ module.exports = function(grunt) {
 
     grunt.registerTask('host-example', ['connect:example:keepalive']);
     grunt.registerTask('example', ['connect:example', 'protractor:example']);
-    grunt.registerTask('test', ['jasmine_node']);
+    grunt.registerTask('test', ['jasmine_nodejs']);
     grunt.registerTask('lint', ['jshint']);
     grunt.registerTask('client-test', ['browserify:test', 'jasmine:test']);
 
-    grunt.registerTask('verify', ['test', 'client-test', 'example']);
+    grunt.registerTask('verify', ['lint', 'test', 'client-test', 'example']);
 };
