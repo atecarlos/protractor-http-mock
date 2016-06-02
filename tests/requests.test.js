@@ -6,13 +6,8 @@ describe('requests', function(){
 	});
 	
 	it('captures and clears requests', function(done){
-		http({
-			method: 'GET',
-			url: 'test-api.com/user'
-		});
-
 		http.head('/head').then(function(){
-			expect(module.requests.length).toBeGreaterThan(1);
+			expect(module.requests.length).toBeGreaterThan(0);
 
 			var found = false;
 
@@ -20,6 +15,7 @@ describe('requests', function(){
 				if(request.method === 'HEAD'){
 					found = true;
 					expect(request.url).toBe('/head');
+					expect(request.headers).not.toBeDefined();
 				}
 			});
 
@@ -27,6 +23,35 @@ describe('requests', function(){
 
 			module.clearRequests();
 			expect(module.requests.length).toBe(0);
+			done();
+		});
+	});
+
+	it('captures requests with headers', function(done){
+		http({
+			method: 'get',
+			url: '/user',
+			headers: {
+				'x-auth': 'pass',
+				'gzip-pro': 'yes'
+			}
+		}).then(function(){
+			expect(module.requests.length).toBeGreaterThan(0);
+
+			var found = false;
+
+			module.requests.forEach(function(request){
+				if(request.headers){
+					found = true;
+					expect(request.url).toBe('/user');
+					expect(request.headers).toEqual({
+						'x-auth': 'pass',
+						'gzip-pro': 'yes'
+					});
+				}
+			});
+
+			expect(found).toBe(true);
 			done();
 		});
 	});

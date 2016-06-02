@@ -63,6 +63,27 @@ describe('interceptors', function(){
 				}
 			}
 		}]);
+
+		$httpProvider.interceptors.push(['$q', function($q){
+			return {
+				request: function(config){
+					if(config.url.match(/with-headers/)){
+						config.headers['authorization'] = 'token';
+					}
+
+					return config;
+				},
+				response: function(response){
+					if(response.config.url.match(/with-headers/)){
+						response.headers['response-header'] = 'response-header';
+
+						return $q.when(response);
+					}
+
+					return response;
+				}
+			}
+		}]);
 	}]);
 
 	it('allows intercepts through service factory functions', function(done){
@@ -104,6 +125,16 @@ describe('interceptors', function(){
 		}).then(function(response){
 			expect(response.data.name).toBe('promise intercept response test');
 			expect(response.data.interceptedPromiseResponse).toBeTruthy();
+			done();
+		});
+	});
+
+	it('provides default empty object headers if none are set', function(done){
+		http({
+			method: 'GET',
+			url: 'test-url.com/with-headers'
+		}).then(function(response){
+			expect(response.headers['response-header']).toBe('response-header');
 			done();
 		});
 	});

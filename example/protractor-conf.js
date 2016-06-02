@@ -1,7 +1,7 @@
 var config = {
     baseUrl: 'http://localhost:8000/',
     specs: [
-      'spec/requestsMade.spec.js'
+      'spec/*.spec.js'
     ],
     mocks: {
       dir: 'mocks',
