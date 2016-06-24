@@ -60,6 +60,13 @@ describe('interceptors', function(){
 					}
 
 					return response;
+				},
+				responseError: function(response){
+					if(response.config.url.match(/response-error/)){
+						response.data.interceptedResponseError = true;
+					}
+
+					return $q.reject(response);
 				}
 			}
 		}]);
@@ -125,6 +132,17 @@ describe('interceptors', function(){
 		}).then(function(response){
 			expect(response.data.name).toBe('promise intercept response test');
 			expect(response.data.interceptedPromiseResponse).toBeTruthy();
+			done();
+		});
+	});
+
+	it('allows for intercepts handling an error response', function(done){
+		http({
+			method: 'GET',
+			url: 'test-url.com/response-error'
+		}).catch(function(response){
+			expect(response.data.interceptedResponseError).toBe(true);
+			expect(response.data.name).toBe('intercept test');
 			done();
 		});
 	});

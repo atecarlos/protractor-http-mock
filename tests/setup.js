@@ -171,6 +171,19 @@
 		},
 		{
 			request: {
+				path: '/response-error',
+				interceptedRequest: true,
+				method: 'get'
+			},
+			response: {
+				data: {
+					name: 'intercept test'
+				},
+				status: 400
+			}
+		},
+		{
+			request: {
 				path: '/anonymous-intercept',
 				interceptedAnonymousRequest: true,
 				method: 'get'
