@@ -17,11 +17,11 @@ var config = {
     }
 };
 
-if (process.env.TRAVIS) {
+if (true || process.env.TRAVIS) {
     //Run PhantomJS on Travis
     config.capabilities = {
         browserName: 'phantomjs',
-        'phantomjs.binary.path': require('phantomjs').path,
+        //'phantomjs.binary.path': require('phantomjs').path,
         'phantomjs.ghostdriver.cli.args': ['--loglevel=DEBUG'],
         shardTestFiles: true,
         maxInstances: 2
