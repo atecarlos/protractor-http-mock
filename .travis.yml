@@ -2,7 +2,7 @@ sudo: false
 bundler_args: --retry 3
 language: node_js
 node_js:
-  - 0.12
+  - 4.2.2
 cache:
   directories:
     - node_modules/
