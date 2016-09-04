@@ -17,7 +17,13 @@ var config = {
     }
 };
 
-if (process.env.TRAVIS) {
+if (process.env.DIRECT_CONNECT) {
+    //Run tests on chrome instance
+    config.capabilities = {
+        browserName: process.env.DIRECT_CONNECT
+    };
+    config.directConnect = true;
+} else if (process.env.TRAVIS) {
     //Run PhantomJS on Travis
     config.capabilities = {
         browserName: 'phantomjs',
