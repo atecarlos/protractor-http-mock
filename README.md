@@ -263,3 +263,7 @@ To run these tests locally, please follow these steps from the root directory:
 1. `npm install`
 2. `npm run webdriver-update`
 3. `npm run example`
+
+## LICENSE
+
+Please see [LICENSE](./LICENSE)
