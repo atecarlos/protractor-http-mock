@@ -9,7 +9,7 @@
     "webdriver-update": "node node_modules/grunt-protractor-runner/scripts/webdriver-manager-update"
   },
   "author": "Carlos Atencio",
-  "license": "BSD-2-Clause",
+  "license": "MIT",
   "devDependencies": {
     "grunt": "~1.0.1",
     "grunt-browserify": "^5.0.0",
