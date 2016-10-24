@@ -16,13 +16,20 @@ angular
 				return $http({ method: 'POST', url: '/users/new', data: data });
 			},
 			getBy: function(name, city){
-				return $http({ 
-					method: 'GET', 
+				return $http({
+					method: 'GET',
 					url: '/users',
 					params: {
 						name: name,
 						city: city
 					}
+				});
+			},
+			getById: function(id){
+				console.log(id);
+				return $http({
+					method: 'GET',
+					url: '/users/' + id
 				});
 			},
 			getByQuery: function(name, city){
@@ -48,6 +55,11 @@ angular
 						name: name,
 						city: city
 					}
+				});
+			},
+			getThroughPlugin: function(){
+				return $http.get('/users', {
+					plugin: {}
 				});
 			}
 		};
@@ -163,6 +175,12 @@ angular
 				.catch(catchHandler);
 		};
 
+		self.searchById = function() {
+			userService.getById(self.query)
+				.then(searchHandler)
+				.catch(catchHandler);
+		};
+
 		self.searchByQuery = function(){
 			userService.getByQuery(self.query, self.queryCity)
 				.then(searchHandler)
@@ -258,4 +276,14 @@ angular
 	})
 	.controller('HttpDefaultsController', function($http){
 		this.hasHttpDefaults = !!$http.defaults;
+	})
+	.controller('PluginsController', function(userService){
+		var self = this;
+
+		self.get = function(){
+			return userService.getThroughPlugin().then(function(response){
+				console.log('HERE', response);
+				self.result = response.data;
+			});
+		}
 	});

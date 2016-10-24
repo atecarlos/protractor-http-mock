@@ -1,0 +1,16 @@
+sudo: false
+bundler_args: --retry 3
+language: node_js
+node_js:
+  - 4.2.2
+cache:
+  directories:
+    - node_modules/
+install:
+  - npm set progress=false
+  - travis_retry npm install
+before_script:
+  - npm install -g grunt-cli
+script:
+  - npm run webdriver-update
+  - npm test

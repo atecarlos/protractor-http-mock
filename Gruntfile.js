@@ -6,19 +6,17 @@ module.exports = function(grunt) {
             options: {
                 jshintrc: '.jshintrc',
             },
-            files: ['lib/**/*.js']    
+            files: ['lib/**/*.js']
         },
-        jasmine_node: {
-            options: {
-                forceExit: true,
-                specNameMatcher: '.specs',
-            },
-            all: ['specs/']
+        jasmine_nodejs: {
+            all: {
+                specs: ['specs/*.js']
+            }
         },
         connect: {
             example: {
                 options: {
-                    base: 'example'   
+                    base: 'example'
                 }
             },
             'client-test': {
@@ -29,7 +27,7 @@ module.exports = function(grunt) {
         },
         protractor: {
             options: {
-                configFile: 'example/protractor.conf',
+                configFile: 'example/protractor-conf.js',
                 //debug: true
             },
             example: {}
@@ -50,9 +48,12 @@ module.exports = function(grunt) {
             test: {
                 src: 'tests/bundle/httpMock.js',
                 options: {
-                    specs: 'tests/*test.js',
+                    specs: 'tests/*.test.js',
                     vendor: [
                         'http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.js'
+                    ],
+                    helpers: [
+                        'tests/setup.js'
                     ],
                     template: 'tests/template.tmpl'
                 }
@@ -61,7 +62,7 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-jasmine-node');
+    grunt.loadNpmTasks('grunt-jasmine-nodejs');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-browserify');
@@ -69,8 +70,9 @@ module.exports = function(grunt) {
 
     grunt.registerTask('host-example', ['connect:example:keepalive']);
     grunt.registerTask('example', ['connect:example', 'protractor:example']);
-    grunt.registerTask('test', ['jasmine_node']);
+    grunt.registerTask('test', ['jasmine_nodejs']);
+    grunt.registerTask('lint', ['jshint']);
     grunt.registerTask('client-test', ['browserify:test', 'jasmine:test']);
 
-    grunt.registerTask('verify', ['test', 'client-test', 'example']);
+    grunt.registerTask('verify', ['lint', 'test', 'client-test', 'example']);
 };

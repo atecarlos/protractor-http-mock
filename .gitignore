@@ -5,3 +5,4 @@ node_modules/
 .grunt
 _SpecRunner.html
 tests/bundle/
+.idea/
