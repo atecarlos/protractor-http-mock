@@ -48,4 +48,7 @@ describe('init data', function(){
 		globalMocks.teardown();
 		defaultConfig.teardown();
 	});
+	it('will not error when not providing config', function () {
+		expect(this.initData).not.toThrow();
+	});
 });
