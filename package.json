@@ -4,7 +4,7 @@
   "description": "Mock HTTP calls in your protractor specs.",
   "main": "index.js",
   "scripts": {
-    "example": "grunt example",
+    "example": "node_modules/.bin/grunt example",
     "test": "node_modules/.bin/grunt verify",
     "webdriver-update": "node node_modules/grunt-protractor-runner/scripts/webdriver-manager-update"
   },

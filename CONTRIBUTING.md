@@ -8,7 +8,7 @@ This project is developed using grunt. To run all tests, simply execute
 
 `npm install`
 `npm run webdriver-update`
-`grunt verify`
+`npm test`
 
 * To add a unit test, please refer to tests/httpMock.test.js
 * To add an example, please refer to the example/ folder.
