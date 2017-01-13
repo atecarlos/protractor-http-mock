@@ -26,6 +26,7 @@
     "url": "https://github.com/atecarlos/protractor-http-mock"
   },
   "dependencies": {
+    "debug": "^2.2.0",
     "query-string": "^4.1.0"
   },
   "engines": {
