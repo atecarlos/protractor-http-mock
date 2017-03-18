@@ -50,7 +50,7 @@ module.exports = function(grunt) {
                 options: {
                     specs: 'tests/*.test.js',
                     vendor: [
-                        'http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.js'
+                        'http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js'
                     ],
                     helpers: [
                         'tests/setup.js'

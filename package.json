@@ -6,6 +6,7 @@
   "scripts": {
     "example": "node_modules/.bin/grunt example",
     "test": "node_modules/.bin/grunt verify",
+    "client-test": "node_modules/.bin/grunt client-test",
     "webdriver-update": "node node_modules/grunt-protractor-runner/scripts/webdriver-manager-update"
   },
   "author": "Carlos Atencio",

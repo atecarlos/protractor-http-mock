@@ -306,9 +306,13 @@
 
 	context.httpMock(expectations, plugins)();
 
-	context.__module = angular.module('httpMock').run(function($http){
-		context.__getHttp = function(){
-			return $http;
-		};
-	});
+	context.__module = angular.module('httpMock')
+		.config(['$qProvider', function ($qProvider) {
+		    $qProvider.errorOnUnhandledRejections(false);
+		}])
+		.run(function($http){
+			context.__getHttp = function(){
+				return $http;
+			};
+		});
 })(window);
