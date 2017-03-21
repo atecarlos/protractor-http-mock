@@ -46,23 +46,23 @@ describe('requests made', function(){
 
 	it('can evaluate requests made', function(){
 		expect(mock.requestsMade()).toEqual([
-			{ url : '/default', method : 'GET' },
-			{ url : '/users', method : 'GET' }
+			{ url : '/default', method : 'GET', mock: 1 },
+			{ url : '/users', method : 'GET', mock: 1 }
 		]);
 		
 		element(by.model('ctrl.newUser')).sendKeys('my-new-user');
 		element(by.css('.form #save')).click();
 
 		expect(mock.requestsMade()).toEqual([
-			{ url : '/default', method : 'GET' },
-			{ url : '/users', method : 'GET' },
-			{ data : { name : 'my-new-user' }, url : '/users/new', method : 'POST' }
+			{ url : '/default', method : 'GET', mock: 1 },
+			{ url : '/users', method : 'GET', mock: 1 },
+			{ data : { name : 'my-new-user' }, url : '/users/new', method : 'POST', mock: 1 }
 		]);
 	});
 
 	it('can evaluate just the last request made', function(){
 		mock.requestsMade().then(function(requests){
-			expect(requests[1]).toEqual({ url : '/users', method : 'GET' })
+			expect(requests[1]).toEqual({ url : '/users', method : 'GET', mock: 1 })
 		});
 	});
 
