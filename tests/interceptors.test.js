@@ -43,6 +43,18 @@ describe('interceptors', function(){
 			}
 		});
 
+		$httpProvider.interceptors.push(function(){
+			var count = 0;
+			return {
+				response: function(response){
+					count++;
+					response.headers['stateful-anonymous-response-count'] = count;
+
+					return response;
+				}
+			}
+		});
+
 		$httpProvider.interceptors.push(['$q', function($q){
 			return {
 				request: function(config){
@@ -111,6 +123,21 @@ describe('interceptors', function(){
 		}).then(function(response){
 			expect(response.data.name).toBe('anonymous intercept test');
 			expect(response.data.interceptedResponse).toBeTruthy();
+			done();
+		});
+	});
+
+	it('allows for intercepts through stateful anonymous factory', function(done){
+		http({
+			method: 'GET',
+			url: 'test-url.com/anonymous-intercept'
+		}).then(function(){
+			return http({
+				method: 'GET',
+				url: 'test-url.com/anonymous-intercept'
+			});
+		}).then(function(response){
+			expect(response.headers['stateful-anonymous-response-count']).toBeGreaterThan(1);
 			done();
 		});
 	});
