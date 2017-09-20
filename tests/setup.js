@@ -196,6 +196,17 @@
 		},
 		{
 			request: {
+				path: '/stateful-intercept',
+				method: 'get'
+			},
+			response: {
+				data: {
+					name: 'stateful intercept test'
+				}
+			}
+		},
+		{
+			request: {
 				path: '/promise-request',
 				method: 'POST'
 			},

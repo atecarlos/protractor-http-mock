@@ -47,8 +47,10 @@ describe('interceptors', function(){
 			var count = 0;
 			return {
 				response: function(response){
-					count++;
-					response.headers['stateful-anonymous-response-count'] = count;
+					if(response.config.url.match(/stateful-intercept/)){
+						count++;
+						response.headers['stateful-anonymous-response-count'] = count;
+					}
 
 					return response;
 				}
@@ -130,14 +132,14 @@ describe('interceptors', function(){
 	it('allows for intercepts through stateful anonymous factory', function(done){
 		http({
 			method: 'GET',
-			url: 'test-url.com/anonymous-intercept'
+			url: 'test-url.com/stateful-intercept'
 		}).then(function(){
 			return http({
 				method: 'GET',
-				url: 'test-url.com/anonymous-intercept'
+				url: 'test-url.com/stateful-intercept'
 			});
 		}).then(function(response){
-			expect(response.headers['stateful-anonymous-response-count']).toBeGreaterThan(1);
+			expect(response.headers['stateful-anonymous-response-count']).toBe(2);
 			done();
 		});
 	});

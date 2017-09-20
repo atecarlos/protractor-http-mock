@@ -1,6 +1,6 @@
 {
   "name": "protractor-http-mock",
-  "version": "0.9.2",
+  "version": "0.10.0",
   "description": "Mock HTTP calls in your protractor specs.",
   "main": "index.js",
   "scripts": {
